@@ -13,13 +13,11 @@ public class TestMain {
 		File srcFile = createTempFile(src);
 		
 		String[] backends = { "dot", "java", "c", "jit" };
-		String[] params = { null, srcFile.getAbsolutePath(), null };
+		String[] params = { null, srcFile.getAbsolutePath(), "test" };
 		
 		for (String config : backends) {
 			// set config
 			params[0] = "-" + config;
-			// set output
-			params[2] = "test_" + config;
 			// run
 			Brainfuck.main(params);
 		}
