@@ -9,11 +9,11 @@ import javassist.CtClass;
 public class JITBackend extends AbstractJavassistBackend<RuntimeException> {
 
 	public JITBackend() {
-		this("Temp");
+		this(null);
 	}
 
 	public JITBackend(String className) {
-		super(className);
+		super("Temp");
 	}
 
 	@Override

@@ -75,7 +75,7 @@ public abstract class AbstractJavassistBackend<E extends Exception> extends
 				body.append("mem[ptr]=System.in.read();");
 				break;
 			case OUTPUT:
-				body.append("System.out.write((char)mem[ptr]);");
+				body.append("System.out.print((char)mem[ptr]);");
 				break;
 			default:
 				throw new RuntimeException("unexpected node: " + node.type);
