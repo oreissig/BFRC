@@ -5,3 +5,4 @@
 *.war
 *.ear
 org.eclipse.jdt.core.prefs
+bin
