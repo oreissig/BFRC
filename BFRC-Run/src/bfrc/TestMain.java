@@ -7,14 +7,13 @@ import java.io.Writer;
 
 public class TestMain {
 	public static void main(String[] args) throws IOException {
-		//String src = "+.,\n+++[>[-]++++<-]>.";
 		String src = ">+++++++++[<++++++++>-]<.>+++++++[<++++>-]<+.+++++++..+++.[-]>++++++++[<++++>-]<.>+++++++++++[<+++++>-]<.>++++++++[<+++>-]<.+++.------.--------.[-]>++++++++[<++++>-]<+.[-]++++++++++.";
-		
+
 		File srcFile = createTempFile(src);
-		
+
 		String[] backends = { "dot", "java", "c", "jit" };
 		String[] params = { null, srcFile.getAbsolutePath(), "test" };
-		
+
 		for (String config : backends) {
 			// set config
 			params[0] = "-" + config;
@@ -22,7 +21,7 @@ public class TestMain {
 			Brainfuck.main(params);
 		}
 	}
-	
+
 	private static File createTempFile(String content) throws IOException {
 		File f = File.createTempFile("bfrc", null);
 		f.deleteOnExit();
