@@ -23,8 +23,7 @@ public class Brainfuck {
 		for (String arg : args) {
 			if (arg.startsWith("-")) {
 				String name = arg.substring(1);
-				if (!loadProperties(props, name))
-					System.err.println("could not find configuration: " + name);
+				loadProperties(props, name);
 			} else {
 				if (inFile == null)
 					inFile = arg;
@@ -61,6 +60,7 @@ public class Brainfuck {
 			props.load(in);
 			return true;
 		} else {
+			System.err.println("could not find configuration: " + fileName);
 			return false;
 		}
 	}
