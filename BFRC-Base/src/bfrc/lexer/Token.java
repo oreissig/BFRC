@@ -1,7 +1,7 @@
 package bfrc.lexer;
 
 public class Token {
-	public enum TokenType {
+	public static enum TokenType {
 		PLUS, MINUS, LEFT, RIGHT, IN, OUT, BEGIN, END
 	}
 
