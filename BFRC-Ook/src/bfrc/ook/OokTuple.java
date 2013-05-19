@@ -24,4 +24,9 @@ public class OokTuple {
 	public int hashCode() {
 		return (ook1.ordinal() >> 16) + ook2.ordinal();
 	}
+
+	@Override
+	public String toString() {
+		return ook1.toString() + "_" + ook2.toString();
+	}
 }

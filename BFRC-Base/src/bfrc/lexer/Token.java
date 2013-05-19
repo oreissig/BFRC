@@ -12,4 +12,9 @@ public class Token {
 		this.type = type;
 		this.pos = line + ":" + offset;
 	}
+
+	@Override
+	public String toString() {
+		return pos + "-" + type;
+	}
 }
