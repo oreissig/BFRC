@@ -6,3 +6,5 @@
 *.ear
 org.eclipse.jdt.core.prefs
 bin
+*.c
+*.dot
