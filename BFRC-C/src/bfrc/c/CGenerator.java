@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.Writer;
 import java.util.Deque;
 
-import bfrc.ast.AbstractTreeVisitor;
+import bfrc.ast.AbstractTreeWalker;
 import bfrc.ast.BlockNode;
 import bfrc.ast.ChangeValueNode;
 import bfrc.ast.MovePointerNode;
@@ -13,7 +13,7 @@ import bfrc.ast.Node;
 import bfrc.ast.Node.NodeType;
 import bfrc.backend.Backend;
 
-public class CGenerator extends AbstractTreeVisitor<IOException> implements Backend {
+public class CGenerator extends AbstractTreeWalker<IOException> implements Backend {
 	private final Writer out;
 
 	public CGenerator(String fileName) throws IOException {
@@ -25,14 +25,12 @@ public class CGenerator extends AbstractTreeVisitor<IOException> implements Back
 	}
 
 	@Override
-	public void write(BlockNode ast) throws IOException {
+	protected void before() throws IOException {
 		out.write("#include <stdio.h>\n\n");
-		work(ast);
-		out.close();
 	}
 
 	@Override
-	protected void visit(Node node, Deque<BlockNode> stack) throws IOException {
+	protected boolean visit(Node node, Deque<BlockNode> stack) throws IOException {
 		indent(stack);
 
 		switch (node.type) {
@@ -64,6 +62,7 @@ public class CGenerator extends AbstractTreeVisitor<IOException> implements Back
 				throw new UnsupportedOperationException("unexpected node type "
 						+ node.type);
 		}
+		return true;
 	}
 
 	@Override
@@ -73,6 +72,11 @@ public class CGenerator extends AbstractTreeVisitor<IOException> implements Back
 		if (node.type == NodeType.ROOT)
 			out.write("\n\treturn *ptr;\n");
 		out.write("}\n");
+	}
+
+	@Override
+	protected void after() throws IOException {
+		out.close();
 	}
 
 	private void indent(Deque<BlockNode> stack) throws IOException {

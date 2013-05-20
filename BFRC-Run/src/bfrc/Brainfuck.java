@@ -61,7 +61,7 @@ public class Brainfuck {
 		BlockNode ast = p.parse(l);
 		for (Optimizer o : opts)
 			o.work(ast);
-		b.write(ast);
+		b.work(ast);
 	}
 
 	private static boolean loadProperties(Properties props, String fileName) throws IOException {

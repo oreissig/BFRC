@@ -2,8 +2,7 @@ package bfrc.backend;
 
 import java.io.IOException;
 
-import bfrc.ast.BlockNode;
+import bfrc.ast.TreeWalker;
 
-public interface Backend {
-	public void write(BlockNode ast) throws IOException;
+public interface Backend extends TreeWalker<IOException> {
 }

@@ -8,7 +8,7 @@ import javassist.ClassPool;
 import javassist.CtClass;
 import javassist.CtMethod;
 import javassist.CtNewMethod;
-import bfrc.ast.AbstractTreeVisitor;
+import bfrc.ast.AbstractTreeWalker;
 import bfrc.ast.BlockNode;
 import bfrc.ast.ChangeValueNode;
 import bfrc.ast.MovePointerNode;
@@ -17,43 +17,45 @@ import bfrc.ast.Node.NodeType;
 import bfrc.backend.Backend;
 
 public abstract class AbstractJavassistBackend<E extends Exception> extends
-		AbstractTreeVisitor<RuntimeException> implements Backend {
+		AbstractTreeWalker<IOException> implements Backend {
 
 	private final String className;
 	private StringBuilder body;
+	private CtClass c;
 
 	public AbstractJavassistBackend(String className) {
 		this.className = className;
 	}
 
 	@Override
-	public final void write(BlockNode ast) throws IOException {
+	protected void before() throws IOException {
 		ClassPool cp = ClassPool.getDefault();
-		synchronized (cp) {
-			CtClass c = cp.makeClass(className);
-			body = new StringBuilder("public static int main()");
+		c = cp.makeClass(className);
+		body = new StringBuilder("public static int main()");
+	}
 
-			work(ast);
-			try {
-				CtMethod m = CtNewMethod.make(body.toString(), c);
-				c.addMethod(m);
+	@Override
+	protected void after() throws IOException {
+		try {
+			CtMethod m = CtNewMethod.make(body.toString(), c);
+			c.addMethod(m);
 
-				write(c);
-			} catch (CannotCompileException e) {
-				throw new IOException("exception compiling java class", e);
-			} catch (Exception e) {
-				throw new IOException("exception handling compiled class", e);
-			} finally {
-				body = null;
-				c.detach();
-			}
+			write(c);
+		} catch (CannotCompileException e) {
+			throw new IOException("exception compiling java class", e);
+		} catch (Exception e) {
+			throw new IOException("exception handling compiled class", e);
+		} finally {
+			body = null;
+			c.detach();
+			c = null;
 		}
 	}
 
 	public abstract void write(CtClass clazz) throws E;
 
 	@Override
-	protected void visit(Node node, Deque<BlockNode> stack) {
+	protected boolean visit(Node node, Deque<BlockNode> stack) {
 		switch (node.type) {
 			case ROOT:
 				body.append("{")
@@ -80,6 +82,7 @@ public abstract class AbstractJavassistBackend<E extends Exception> extends
 			default:
 				throw new RuntimeException("unexpected node: " + node.type);
 		}
+		return true;
 	}
 
 	@Override

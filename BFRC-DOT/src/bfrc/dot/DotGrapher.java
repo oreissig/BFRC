@@ -5,12 +5,12 @@ import java.io.IOException;
 import java.io.Writer;
 import java.util.Deque;
 
-import bfrc.ast.AbstractTreeVisitor;
+import bfrc.ast.AbstractTreeWalker;
 import bfrc.ast.BlockNode;
 import bfrc.ast.Node;
 import bfrc.backend.Backend;
 
-public class DotGrapher extends AbstractTreeVisitor<IOException> implements Backend {
+public class DotGrapher extends AbstractTreeWalker<IOException> implements Backend {
 	private final Writer out;
 	private final String graphName;
 
@@ -23,17 +23,22 @@ public class DotGrapher extends AbstractTreeVisitor<IOException> implements Back
 		this.graphName = graphName;
 	}
 
-	public void write(BlockNode ast) throws IOException {
+	@Override
+	protected void before() throws IOException {
 		out.write("digraph " + graphName + " {\n");
-		work(ast);
-		out.write("}");
-		out.close();
 	}
 
 	@Override
-	protected void visit(Node node, Deque<BlockNode> stack) throws IOException {
+	protected boolean visit(Node node, Deque<BlockNode> stack) throws IOException {
 		Node parent = stack.peek();
 		if (parent != null)
 			out.write("\t\"" + parent + "\" -> \"" + node + "\";\n");
+		return true;
+	}
+
+	@Override
+	protected void after() throws IOException {
+		out.write("}");
+		out.close();
 	}
 }
