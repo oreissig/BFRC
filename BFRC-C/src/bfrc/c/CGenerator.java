@@ -79,18 +79,18 @@ public class CGenerator extends AbstractTreeVisitor<IOException> implements Back
 		for (int i = 0; i < stack.size(); i++)
 			out.write('\t');
 	}
-	
+
 	private String varChange(int change) {
 		if (change > 0) {
 			if (change == 1)
 				return "++";
-			else 
+			else
 				return " += " + change;
 		} else if (change < 0) {
 			int abs = -change;
 			if (abs == 1)
 				return "--";
-			else 
+			else
 				return " -= " + abs;
 		} else
 			return ""; // no change

@@ -4,7 +4,7 @@ public abstract class Node {
 	public static enum NodeType {
 		ROOT, LOOP, VALUE, POINTER, INPUT, OUTPUT
 	}
-	
+
 	public final NodeType type;
 	public final String position;
 

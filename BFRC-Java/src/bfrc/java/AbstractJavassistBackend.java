@@ -18,7 +18,7 @@ import bfrc.backend.Backend;
 
 public abstract class AbstractJavassistBackend<E extends Exception> extends
 		AbstractTreeVisitor<RuntimeException> implements Backend {
-	
+
 	private final String className;
 	private StringBuilder body;
 
@@ -27,7 +27,7 @@ public abstract class AbstractJavassistBackend<E extends Exception> extends
 	}
 
 	@Override
-	public void write(BlockNode ast) throws IOException {
+	public final void write(BlockNode ast) throws IOException {
 		ClassPool cp = ClassPool.getDefault();
 		synchronized (cp) {
 			CtClass c = cp.makeClass(className);
@@ -37,7 +37,7 @@ public abstract class AbstractJavassistBackend<E extends Exception> extends
 			try {
 				CtMethod m = CtNewMethod.make(body.toString(), c);
 				c.addMethod(m);
-				
+
 				write(c);
 			} catch (CannotCompileException e) {
 				throw new IOException("exception compiling java class", e);

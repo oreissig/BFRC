@@ -63,7 +63,7 @@ public class Brainfuck {
 			o.work(ast);
 		b.write(ast);
 	}
-	
+
 	private static boolean loadProperties(Properties props, String fileName) throws IOException {
 		InputStream in = Brainfuck.class.getClassLoader()
 								.getResourceAsStream("bfrc/" + fileName + ".config");
