@@ -10,7 +10,9 @@ import bfrc.lexer.Token.TokenType;
 
 public enum Ook {
 
-	Period("Ook."), Exclam("Ook!"), Question("Ook?");
+	Period("Ook."),
+	Exclam("Ook!"),
+	Question("Ook?");
 
 	private final String text;
 
