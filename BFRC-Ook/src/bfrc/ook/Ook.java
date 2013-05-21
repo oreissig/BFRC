@@ -9,25 +9,23 @@ import java.util.Map;
 import bfrc.lexer.Token.TokenType;
 
 public enum Ook {
-	Period, Exclam, Question;
 
-	public String toString() {
-		switch (this) {
-			case Period:
-				return "Ook.";
-			case Exclam:
-				return "Ook!";
-			case Question:
-				return "Ook?";
-			default:
-				return null;
-		}
-	};
+	Period("Ook."), Exclam("Ook!"), Question("Ook?");
+
+	private final String text;
+
+	private Ook(String text) {
+		this.text = text;
+	}
+
+	public String text() {
+		return text;
+	}
 
 	/**
 	 * maps Ook keywords to elements of this enum
 	 */
-	public static final Map<String, Ook> mapping;
+	public static final Map<String, Ook> reverse;
 
 	/**
 	 * maps pairs of Ook keywords to a Brainfuck Token
@@ -35,11 +33,10 @@ public enum Ook {
 	public static final Map<OokTuple, TokenType> tokens;
 
 	static {
-		Map<String, Ook> m = new HashMap<>(3);
-		m.put("Ook.", Period);
-		m.put("Ook!", Exclam);
-		m.put("Ook?", Question);
-		mapping = Collections.unmodifiableMap(m);
+		Map<String, Ook> m = new HashMap<>(values().length);
+		for (Ook o : values())
+			m.put(o.text(), o);
+		reverse = Collections.unmodifiableMap(m);
 
 		Map<OokTuple, TokenType> t = new HashMap<>(8);
 		// Ook. Ook? Move the Memory Pointer to the next array cell.

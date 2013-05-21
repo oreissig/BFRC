@@ -13,7 +13,7 @@ import bfrc.ast.BlockNode;
 import bfrc.ast.ChangeValueNode;
 import bfrc.ast.MovePointerNode;
 import bfrc.ast.Node;
-import bfrc.ast.Node.NodeType;
+import bfrc.ast.NodeType;
 import bfrc.backend.Backend;
 
 public abstract class AbstractJavassistBackend<E extends Exception> extends

@@ -10,7 +10,7 @@ import bfrc.ast.BlockNode;
 import bfrc.ast.ChangeValueNode;
 import bfrc.ast.MovePointerNode;
 import bfrc.ast.Node;
-import bfrc.ast.Node.NodeType;
+import bfrc.ast.NodeType;
 import bfrc.backend.Backend;
 
 public class CGenerator extends AbstractTreeWalker<IOException> implements Backend {

@@ -43,7 +43,7 @@ public class OokLexer implements Lexer {
 			int line1 = lineNo;
 			if (word1 == null)
 				return null;
-			Ook ook1 = Ook.mapping.get(word1);
+			Ook ook1 = Ook.reverse.get(word1);
 			if (ook1 == null)
 				throw new LexicalException("invalid Ook at " +
 						line1 + ":" + offset1);
@@ -55,7 +55,7 @@ public class OokLexer implements Lexer {
 			if (word2 == null)
 				throw new LexicalException("expected Ook for " + word1 +
 						" at " + lineNo + ":" + offset);
-			Ook ook2 = Ook.mapping.get(word2);
+			Ook ook2 = Ook.reverse.get(word2);
 			if (ook2 == null)
 				throw new LexicalException("invalid Ook at " +
 						line2 + ":" + offset2);
