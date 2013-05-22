@@ -1,11 +1,11 @@
 package bfrc.ast;
 
-public class ChangeValueNode extends Node {
+public abstract class ChangeNode extends Node {
 
 	public final int change;
 
-	public ChangeValueNode(String position, int change) {
-		super(NodeType.VALUE, position);
+	public ChangeNode(NodeType type, String position, int change) {
+		super(type, position);
 		this.change = change;
 	}
 

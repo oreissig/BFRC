@@ -1,10 +1,10 @@
 package bfrc.bf;
 
 import bfrc.ast.BlockNode;
-import bfrc.ast.ChangeValueNode;
+import bfrc.ast.ValueNode;
 import bfrc.ast.InputNode;
 import bfrc.ast.LoopNode;
-import bfrc.ast.MovePointerNode;
+import bfrc.ast.PointerNode;
 import bfrc.ast.Node;
 import bfrc.ast.OutputNode;
 import bfrc.ast.RootNode;
@@ -74,19 +74,19 @@ public class BFParser implements Parser {
 	private void common(BlockNode context, Token t) {
 		switch (t.type) {
 			case PLUS:
-				Node n = new ChangeValueNode(t.pos, +1);
+				Node n = new ValueNode(t.pos, +1);
 				context.sub.add(n);
 				break;
 			case MINUS:
-				n = new ChangeValueNode(t.pos, -1);
+				n = new ValueNode(t.pos, -1);
 				context.sub.add(n);
 				break;
 			case LEFT:
-				n = new MovePointerNode(t.pos, -1);
+				n = new PointerNode(t.pos, -1);
 				context.sub.add(n);
 				break;
 			case RIGHT:
-				n = new MovePointerNode(t.pos, +1);
+				n = new PointerNode(t.pos, +1);
 				context.sub.add(n);
 				break;
 			case IN:

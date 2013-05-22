@@ -10,8 +10,8 @@ import javassist.CtMethod;
 import javassist.CtNewMethod;
 import bfrc.ast.AbstractTreeWalker;
 import bfrc.ast.BlockNode;
-import bfrc.ast.ChangeValueNode;
-import bfrc.ast.MovePointerNode;
+import bfrc.ast.ValueNode;
+import bfrc.ast.PointerNode;
 import bfrc.ast.Node;
 import bfrc.ast.NodeType;
 import bfrc.backend.Backend;
@@ -66,12 +66,12 @@ public abstract class AbstractJavassistBackend<E extends Exception> extends
 				body.append("while(mem[ptr]!=0){");
 				break;
 			case VALUE:
-				ChangeValueNode vn = (ChangeValueNode) node;
+				ValueNode vn = (ValueNode) node;
 				body.append("mem[ptr]+=" + vn.change + ";");
 				break;
 			case POINTER:
-				MovePointerNode pn = (MovePointerNode) node;
-				body.append("ptr+=" + pn.direction + ";");
+				PointerNode pn = (PointerNode) node;
+				body.append("ptr+=" + pn.change + ";");
 				break;
 			case INPUT:
 				body.append("mem[ptr]=System.in.read();");
