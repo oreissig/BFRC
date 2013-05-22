@@ -28,6 +28,7 @@ public class TestMain {
 		Writer w = new FileWriter(f);
 		w.write(content);
 		w.close();
+		f.setReadOnly();
 		return f;
 	}
 }
