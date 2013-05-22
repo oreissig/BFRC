@@ -1,10 +1,4 @@
-*.class
-
-# Package Files #
 *.jar
-*.war
-*.ear
 org.eclipse.jdt.core.prefs
 bin
-*.c
-*.dot
+/BFRC-Run/test.*

@@ -27,7 +27,7 @@ public enum Ook {
 	/**
 	 * maps Ook keywords to elements of this enum
 	 */
-	public static final Map<String, Ook> reverse;
+	public static final Map<String, Ook> keywords;
 
 	/**
 	 * maps pairs of Ook keywords to a Brainfuck Token
@@ -38,7 +38,7 @@ public enum Ook {
 		Map<String, Ook> m = new HashMap<>(values().length);
 		for (Ook o : values())
 			m.put(o.text(), o);
-		reverse = Collections.unmodifiableMap(m);
+		keywords = Collections.unmodifiableMap(m);
 
 		Map<OokTuple, TokenType> t = new HashMap<>(8);
 		// Ook. Ook? Move the Memory Pointer to the next array cell.

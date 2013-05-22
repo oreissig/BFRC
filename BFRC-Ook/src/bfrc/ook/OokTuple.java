@@ -27,6 +27,6 @@ public class OokTuple {
 
 	@Override
 	public String toString() {
-		return ook1.toString() + "_" + ook2.toString();
+		return ook1.toString() + " " + ook2.toString();
 	}
 }
