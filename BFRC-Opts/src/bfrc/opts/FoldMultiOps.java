@@ -22,15 +22,16 @@ public class FoldMultiOps extends AbstractTreeWalker<OptimizerException>
 		for (int i = 0; i < nodes.size(); i++) {
 			Node n = nodes.get(i);
 			if (n instanceof ChangeNode) {
+				ChangeNode cn = (ChangeNode) n;
 				if (last != null && n.type == last.type) {
 					// merge nodes
-					last.change += ((ChangeNode) n).change;
+					last.change += cn.change;
 					nodes.remove(i);
 					// mind the reduced node count
 					i--;
 				} else {
 					// first of its kind
-					last = (ChangeNode) n;
+					last = cn;
 				}
 			} else {
 				// different type, reset
