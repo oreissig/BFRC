@@ -23,7 +23,7 @@ public class JavaClassBackend implements Backend {
 
 	@Override
 	public String getDefaultExtension() {
-		// hack, will result in a class named Main
+		// hack, provide a valid class name as extension
 		return "Main";
 	}
 

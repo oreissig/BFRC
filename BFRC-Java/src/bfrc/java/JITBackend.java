@@ -22,7 +22,8 @@ public class JITBackend implements Backend {
 
 	@Override
 	public String getDefaultExtension() {
-		return "Temp";
+		// hack, provide class name as extension
+		return className;
 	}
 
 	@Override
