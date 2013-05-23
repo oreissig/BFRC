@@ -7,21 +7,23 @@ import java.util.Deque;
 
 import bfrc.ast.AbstractTreeWalker;
 import bfrc.ast.BlockNode;
-import bfrc.ast.ValueNode;
-import bfrc.ast.PointerNode;
 import bfrc.ast.Node;
 import bfrc.ast.NodeType;
+import bfrc.ast.PointerNode;
+import bfrc.ast.ValueNode;
 import bfrc.backend.Backend;
 
 public class CGenerator extends AbstractTreeWalker<IOException> implements Backend {
-	private final Writer out;
+	private Writer out;
 
-	public CGenerator(String fileName) throws IOException {
-		this(new FileWriter(fileName + ".c"));
+	@Override
+	public void setOutput(String output) throws IOException {
+		this.out = new FileWriter(output);
 	}
 
-	public CGenerator(Writer w) {
-		this.out = w;
+	@Override
+	public String getDefaultExtension() {
+		return "c";
 	}
 
 	@Override

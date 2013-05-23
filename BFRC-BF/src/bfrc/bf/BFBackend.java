@@ -13,14 +13,16 @@ import bfrc.ast.NodeType;
 import bfrc.backend.Backend;
 
 public class BFBackend extends AbstractTreeWalker<IOException> implements Backend {
-	private final Writer out;
+	private Writer out;
 
-	public BFBackend(String fileName) throws IOException {
-		this(new FileWriter(fileName + ".bf"));
+	@Override
+	public void setOutput(String output) throws IOException {
+		this.out = new FileWriter(output);
 	}
 
-	public BFBackend(Writer w) {
-		this.out = w;
+	@Override
+	public String getDefaultExtension() {
+		return "bf";
 	}
 
 	@Override

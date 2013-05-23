@@ -1,6 +1,5 @@
 package bfrc.java;
 
-import java.io.IOException;
 import java.util.Deque;
 
 import javassist.CannotCompileException;
@@ -10,49 +9,42 @@ import javassist.CtMethod;
 import javassist.CtNewMethod;
 import bfrc.ast.AbstractTreeWalker;
 import bfrc.ast.BlockNode;
-import bfrc.ast.ValueNode;
-import bfrc.ast.PointerNode;
 import bfrc.ast.Node;
 import bfrc.ast.NodeType;
-import bfrc.backend.Backend;
+import bfrc.ast.PointerNode;
+import bfrc.ast.ValueNode;
 
-public abstract class AbstractJavassistBackend<E extends Exception> extends
-		AbstractTreeWalker<IOException> implements Backend {
+public class JavassistHelper extends AbstractTreeWalker<CannotCompileException> {
 
-	private final String className;
+	private String className;
 	private StringBuilder body;
 	private CtClass c;
 
-	public AbstractJavassistBackend(String className) {
+	public CtClass create(String className, Node root) throws CannotCompileException {
 		this.className = className;
+		work(root);
+		
+		CtClass result = c;
+		c = null;
+		return result;
 	}
 
 	@Override
-	protected void before() throws IOException {
+	protected void before() {
 		ClassPool cp = ClassPool.getDefault();
 		c = cp.makeClass(className);
 		body = new StringBuilder("public static int main()");
 	}
 
 	@Override
-	protected void after() throws IOException {
+	protected void after() throws CannotCompileException {
 		try {
 			CtMethod m = CtNewMethod.make(body.toString(), c);
 			c.addMethod(m);
-
-			write(c);
-		} catch (CannotCompileException e) {
-			throw new IOException("exception compiling java class", e);
-		} catch (Exception e) {
-			throw new IOException("exception handling compiled class", e);
 		} finally {
 			body = null;
-			c.detach();
-			c = null;
 		}
 	}
-
-	public abstract void write(CtClass clazz) throws E;
 
 	@Override
 	protected boolean visit(Node node, Deque<BlockNode> stack) {

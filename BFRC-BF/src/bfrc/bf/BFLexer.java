@@ -2,8 +2,6 @@ package bfrc.bf;
 
 import static bfrc.lexer.Token.TokenType.*;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 
@@ -12,18 +10,15 @@ import bfrc.lexer.LexicalException;
 import bfrc.lexer.Token;
 
 public class BFLexer implements Lexer {
-	private final Reader in;
+	private Reader in;
+	private int lineNo;
+	private int offset;
 
-	private int lineNo = 1;
-	private int offset = 0;
-
-	public BFLexer(String fileName) throws IOException {
-		this(new BufferedReader(
-				new FileReader(fileName)));
-	}
-
-	public BFLexer(Reader in) throws IOException {
-		this.in = in;
+	@Override
+	public void setInput(Reader input) {
+		lineNo = 1;
+		offset = 0;
+		in = input;
 	}
 
 	@Override

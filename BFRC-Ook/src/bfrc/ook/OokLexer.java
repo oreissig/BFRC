@@ -1,7 +1,5 @@
 package bfrc.ook;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 
@@ -20,18 +18,16 @@ import bfrc.lexer.Token.TokenType;
  *      language</a>
  */
 public class OokLexer implements Lexer {
-	private final Reader in;
-
-	private int lineNo = 1;
-	private int offset = 0;
+	private Reader in;
+	private int lineNo;
+	private int offset;
 	private Character last;
 
-	public OokLexer(String fileName) throws IOException {
-		this(new BufferedReader(new FileReader(fileName)));
-	}
-
-	public OokLexer(Reader in) throws IOException {
-		this.in = in;
+	@Override
+	public void setInput(Reader input) {
+		lineNo = 1;
+		offset = 0;
+		in = input;
 	}
 
 	@Override

@@ -7,24 +7,39 @@ import javassist.CtClass;
 import javassist.CtMethod;
 import javassist.CtNewMethod;
 import javassist.NotFoundException;
+import bfrc.ast.Node;
+import bfrc.backend.Backend;
 
-public class JavaClassBackend extends AbstractJavassistBackend<IOException> {
+public class JavaClassBackend implements Backend {
 
-	public static final String main = "public static void main(String[] args) { main(); }";
+	public static final String main = "public static void main(String[] args) { System.exit(main()); }";
+	private final JavassistHelper helper = new JavassistHelper();
+	private String className;
 
-	public JavaClassBackend(String className) {
-		super(className);
+	@Override
+	public void setOutput(String output) throws IOException {
+		this.className = output;
 	}
 
 	@Override
-	public void write(CtClass clazz) throws IOException {
-		try {
-			CtMethod m = CtNewMethod.make(main, clazz);
-			clazz.addMethod(m);
-			clazz.writeFile();
-		} catch (NotFoundException | CannotCompileException e) {
-			throw new IOException(e);
-		}
+	public String getDefaultExtension() {
+		// hack, will result in a class named Main
+		return "Main";
 	}
 
+	@Override
+	public void work(Node root) throws IOException {
+		CtClass c = null;
+		try {
+			c = helper.create(className, root);
+			CtMethod m = CtNewMethod.make(main, c);
+			c.addMethod(m);
+			c.writeFile();
+		} catch (CannotCompileException | NotFoundException e) {
+			throw new IOException(e);
+		} finally {
+			if (c != null)
+				c.detach();
+		}
+	}
 }

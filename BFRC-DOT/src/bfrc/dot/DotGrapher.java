@@ -11,21 +11,21 @@ import bfrc.ast.Node;
 import bfrc.backend.Backend;
 
 public class DotGrapher extends AbstractTreeWalker<IOException> implements Backend {
-	private final Writer out;
-	private final String graphName;
+	private Writer out;
 
-	public DotGrapher(String fileName) throws IOException {
-		this(new FileWriter(fileName + ".dot"), fileName);
+	@Override
+	public void setOutput(String output) throws IOException {
+		this.out = new FileWriter(output);
 	}
 
-	public DotGrapher(Writer w, String graphName) {
-		this.out = w;
-		this.graphName = graphName;
+	@Override
+	public String getDefaultExtension() {
+		return "dot";
 	}
 
 	@Override
 	protected void before() throws IOException {
-		out.write("digraph " + graphName + " {\n");
+		out.write("digraph BFRC {\n");
 	}
 
 	@Override

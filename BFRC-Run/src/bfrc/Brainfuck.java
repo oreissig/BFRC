@@ -1,8 +1,9 @@
 package bfrc;
 
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.Constructor;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -38,12 +39,12 @@ public class Brainfuck {
 		}
 		if (inFile == null)
 			usage();
-		if (outFile == null)
-			outFile = inFile;
 
 		// construct instances
 		String lexerClass = props.getProperty("bfrc.lexer");
-		Lexer l = instantiate(Lexer.class, lexerClass, String.class, inFile);
+		Lexer l = instantiate(Lexer.class, lexerClass);
+		Reader in = new FileReader(inFile);
+		l.setInput(in);
 
 		String parserClass = props.getProperty("bfrc.parser");
 		Parser p = instantiate(Parser.class, parserClass);
@@ -55,7 +56,10 @@ public class Brainfuck {
 				opts.add(instantiate(Optimizer.class, optClass));
 
 		String backendClass = props.getProperty("bfrc.backend");
-		Backend b = instantiate(Backend.class, backendClass, String.class, outFile);
+		Backend b = instantiate(Backend.class, backendClass);
+		if (outFile == null)
+			outFile = inFile + '.' + b.getDefaultExtension();
+		b.setOutput(outFile);
 
 		// do the compilation
 		BlockNode ast = p.parse(l);
@@ -76,12 +80,8 @@ public class Brainfuck {
 		}
 	}
 
-	private static <T> T instantiate(Class<T> type, String className) {
-		return instantiate(type, className, null, null);
-	}
-
 	@SuppressWarnings("unchecked")
-	private static <T, P> T instantiate(Class<T> type, String className, Class<P> paramType, P param) {
+	private static <T> T instantiate(Class<T> type, String className) {
 		if (className == null || className.trim().isEmpty())
 			throw new RuntimeException("obligatory instance '" + type.getSimpleName() +
 					"' not provided, use appropriate -config arguments");
@@ -94,13 +94,8 @@ public class Brainfuck {
 			if (!type.isAssignableFrom(c))
 				throw new IllegalArgumentException(className +
 						" is no suitable " + type.getSimpleName());
-			Object instance;
-			if (paramType == null) {
-				instance = c.newInstance();
-			} else {
-				Constructor<?> cons = c.getConstructor(paramType);
-				instance = cons.newInstance(param);
-			}
+			// construct it
+			Object instance = c.newInstance();
 			return (T) instance;
 		} catch (Exception e) {
 			throw new RuntimeException("could not create instance for " +
