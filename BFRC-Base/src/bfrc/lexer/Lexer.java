@@ -2,6 +2,11 @@ package bfrc.lexer;
 
 import java.io.Reader;
 
+/**
+ * Common interface for all BFRC lexers.
+ * 
+ * @author oreissig
+ */
 public interface Lexer {
 
 	/**

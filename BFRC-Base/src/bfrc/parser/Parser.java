@@ -4,6 +4,11 @@ import bfrc.ast.BlockNode;
 import bfrc.lexer.Lexer;
 import bfrc.lexer.Token;
 
+/**
+ * Common interface for all BFRC parsers.
+ * 
+ * @author oreissig
+ */
 public interface Parser {
 
 	/**

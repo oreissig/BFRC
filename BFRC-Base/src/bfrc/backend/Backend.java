@@ -4,6 +4,11 @@ import java.io.IOException;
 
 import bfrc.ast.TreeWalker;
 
+/**
+ * Common interface for all BFRC backends.
+ * 
+ * @author oreissig
+ */
 public interface Backend extends TreeWalker<IOException> {
 
 	/**
