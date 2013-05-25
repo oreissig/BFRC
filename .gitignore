@@ -1,4 +1,5 @@
 *.jar
 org.eclipse.jdt.core.prefs
 bin
+*.class
 /BFRC-Run/test.*

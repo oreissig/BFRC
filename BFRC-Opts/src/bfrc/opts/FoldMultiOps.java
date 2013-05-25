@@ -42,7 +42,7 @@ public class FoldMultiOps extends AbstractTreeWalker<OptimizerException>
 					last = null;
 					continue;
 				}
-				
+
 				if (last != null && cn.type == last.type) {
 					// merge nodes
 					last.change += cn.change;
