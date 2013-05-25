@@ -56,12 +56,23 @@ public class OokBackend extends AbstractTreeWalker<IOException> implements Backe
 				break;
 			case VALUE:
 				cn = (ChangeNode) n;
-				if (cn.change >= 0) {
+				count = cn.change;
+				if (cn.absolute) {
+					// set to 0
+					out.write("Ook! Ook? Ook! Ook! Ook? Ook! ");
+					// shorten wrap-arounds
+					while (count < 0)
+						count += 256;
+					// take the shorter route
+					if (count > 128)
+						count -= 256;
+				}
+				
+				if (count >= 0) {
 					op = "Ook. Ook. ";
-					count = cn.change;
 				} else {
 					op = "Ook! Ook! ";
-					count = -cn.change;
+					count = -count;
 				}
 				for (int i = 0; i < count; i++)
 					out.write(op);

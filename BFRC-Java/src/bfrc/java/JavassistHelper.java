@@ -58,7 +58,10 @@ public class JavassistHelper extends AbstractTreeWalker<CannotCompileException> 
 				break;
 			case VALUE:
 				ChangeNode cn = (ChangeNode) node;
-				body.append("mem[ptr]+=" + cn.change + ";");
+				if (cn.absolute)
+					body.append("mem[ptr]=" + cn.change + ";");
+				else
+					body.append("mem[ptr]+=" + cn.change + ";");
 				break;
 			case POINTER:
 				cn = (ChangeNode) node;

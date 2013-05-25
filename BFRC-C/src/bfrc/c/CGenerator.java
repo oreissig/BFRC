@@ -51,7 +51,10 @@ public class CGenerator extends AbstractTreeWalker<IOException> implements Backe
 				break;
 			case VALUE:
 				cn = (ChangeNode) node;
-				out.write("*ptr" + varChange(cn.change) + ";\n");
+				if (cn.absolute)
+					out.write("*ptr = " + cn.change + ";\n");
+				else
+					out.write("*ptr" + varChange(cn.change) + ";\n");
 				break;
 			case INPUT:
 				out.write("*ptr = getchar();\n");
