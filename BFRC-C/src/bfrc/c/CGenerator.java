@@ -7,10 +7,9 @@ import java.util.Deque;
 
 import bfrc.ast.AbstractTreeWalker;
 import bfrc.ast.BlockNode;
+import bfrc.ast.ChangeNode;
 import bfrc.ast.Node;
 import bfrc.ast.NodeType;
-import bfrc.ast.PointerNode;
-import bfrc.ast.ValueNode;
 import bfrc.backend.Backend;
 
 public class CGenerator extends AbstractTreeWalker<IOException> implements Backend {
@@ -47,12 +46,12 @@ public class CGenerator extends AbstractTreeWalker<IOException> implements Backe
 				out.write("while (*ptr) {\n");
 				break;
 			case POINTER:
-				PointerNode pn = (PointerNode) node;
-				out.write("ptr" + varChange(pn.change) + ";\n");
+				ChangeNode cn = (ChangeNode) node;
+				out.write("ptr" + varChange(cn.change) + ";\n");
 				break;
 			case VALUE:
-				ValueNode vn = (ValueNode) node;
-				out.write("*ptr" + varChange(vn.change) + ";\n");
+				cn = (ChangeNode) node;
+				out.write("*ptr" + varChange(cn.change) + ";\n");
 				break;
 			case INPUT:
 				out.write("*ptr = getchar();\n");

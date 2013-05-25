@@ -9,10 +9,9 @@ import javassist.CtMethod;
 import javassist.CtNewMethod;
 import bfrc.ast.AbstractTreeWalker;
 import bfrc.ast.BlockNode;
+import bfrc.ast.ChangeNode;
 import bfrc.ast.Node;
 import bfrc.ast.NodeType;
-import bfrc.ast.PointerNode;
-import bfrc.ast.ValueNode;
 
 public class JavassistHelper extends AbstractTreeWalker<CannotCompileException> {
 
@@ -58,12 +57,12 @@ public class JavassistHelper extends AbstractTreeWalker<CannotCompileException> 
 				body.append("while(mem[ptr]!=0){");
 				break;
 			case VALUE:
-				ValueNode vn = (ValueNode) node;
-				body.append("mem[ptr]+=" + vn.change + ";");
+				ChangeNode cn = (ChangeNode) node;
+				body.append("mem[ptr]+=" + cn.change + ";");
 				break;
 			case POINTER:
-				PointerNode pn = (PointerNode) node;
-				body.append("ptr+=" + pn.change + ";");
+				cn = (ChangeNode) node;
+				body.append("ptr+=" + cn.change + ";");
 				break;
 			case INPUT:
 				body.append("mem[ptr]=System.in.read();");
