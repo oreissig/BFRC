@@ -10,12 +10,26 @@ import bfrc.ast.Node;
 import bfrc.optimizer.Optimizer;
 import bfrc.optimizer.OptimizerException;
 
+/**
+ * This optimization folds multiple relative operations of the same kind
+ * (POINTER, VALUE) into one operation, that does more than one step.
+ * <p>
+ * Examples:
+ * <ul>
+ * <li>{@code + +} will result in a {@code +2}</li>
+ * <li>{@code + + + -} will result in a {@code +2}</li>
+ * <li>{@code > > < >} will result in a {@code 2>}</li>
+ * </ul>
+ * <p>
+ * This optimization has no prerequisites.
+ * 
+ * @author oreissig
+ */
 public class FoldMultiOps extends AbstractTreeWalker<OptimizerException>
 		implements Optimizer {
 
 	@Override
-	protected boolean enter(BlockNode block, Deque<BlockNode> stack)
-			throws OptimizerException {
+	protected boolean enter(BlockNode block, Deque<BlockNode> stack) {
 		ChangeNode last = null;
 
 		List<Node> nodes = block.sub;
@@ -23,7 +37,13 @@ public class FoldMultiOps extends AbstractTreeWalker<OptimizerException>
 			Node n = nodes.get(i);
 			if (n instanceof ChangeNode) {
 				ChangeNode cn = (ChangeNode) n;
-				if (last != null && n.type == last.type) {
+				// do not merge absolute ChangeNodes
+				if (cn.absolute) {
+					last = null;
+					continue;
+				}
+				
+				if (last != null && cn.type == last.type) {
 					// merge nodes
 					last.change += cn.change;
 					nodes.remove(i);

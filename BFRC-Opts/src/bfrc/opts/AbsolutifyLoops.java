@@ -13,12 +13,24 @@ import bfrc.ast.ValueNode;
 import bfrc.optimizer.Optimizer;
 import bfrc.optimizer.OptimizerException;
 
-public class AbsolutifyLoops extends AbstractTreeWalker<OptimizerException> implements Optimizer {
+/**
+ * This optimization replaces loops, that just contain one VALUE node with an
+ * odd {@link ChangeNode#change change} by the {@link ChangeNode#absolute
+ * absolute} VALUE of 0.
+ * <p>
+ * For example, {@code [-]} will become {@code =0}.
+ * <p>
+ * This should be applied after {@link FoldMultiOps} has been performed.
+ * 
+ * @author oreissig
+ */
+public class AbsolutifyLoops extends AbstractTreeWalker<OptimizerException>
+		implements Optimizer {
 
 	@Override
-	protected boolean enter(BlockNode block, Deque<BlockNode> stack)
+	protected void leave(BlockNode block, Deque<BlockNode> stack)
 			throws OptimizerException {
-		// look for child elements: [-] or [+]
+		// look for child elements like [-] or [+]
 		for (int i = 0; i < block.sub.size(); i++) {
 			Node n = block.sub.get(i);
 
@@ -33,10 +45,22 @@ public class AbsolutifyLoops extends AbstractTreeWalker<OptimizerException> impl
 			if (op.type != VALUE)
 				continue;
 
+			ValueNode vn = (ValueNode) op;
+			// no relative change || absolute change to != 0 => infinite loop
+			if ((!vn.absolute && vn.change == 0) ||
+				(vn.absolute && vn.change != 0))
+				throw new OptimizerException("loop at " + n.position +
+						" can never end");
+			// even relative loop increments might never end
+			if (!vn.absolute && vn.change % 2 == 0) {
+				System.err.println("loop at " + n.position +
+						" may never end, did not optimize");
+				continue;
+			}
+
 			// replace block by absolute value
 			Node abs = new ValueNode(n.position, 0, true);
 			block.sub.set(i, abs);
 		}
-		return true;
 	}
 }
