@@ -47,7 +47,6 @@ public abstract class AbstractTreeWalker<E extends Exception> implements TreeWal
 	 * @param n node to visit
 	 * @param stack nesting path of current node
 	 * @return true if node stays in the tree, false removes it
-	 * @throws E
 	 */
 	protected boolean visit(Node n, Deque<BlockNode> stack) throws E {
 		// nothing per default
@@ -56,9 +55,10 @@ public abstract class AbstractTreeWalker<E extends Exception> implements TreeWal
 
 	/**
 	 * Called when entering a given block node. When this block is skipped
-	 * instead, the according {@link #leave(BlockNode, Deque)} won't be called.
+	 * instead, the according {@link #leave(BlockNode, Deque) leave method}
+	 * won't be called.
 	 * 
-	 * @param node
+	 * @param block
 	 * @param stack
 	 * @return true when this subtree is to be entered, false will skip it
 	 */
@@ -77,10 +77,17 @@ public abstract class AbstractTreeWalker<E extends Exception> implements TreeWal
 		// nothing per default
 	}
 
+	/**
+	 * Called before traversing the given AST.
+	 */
 	protected void before() throws E {
 		// nothing per default
 	}
 
+	/**
+	 * Called after traversing the given AST, even in case of an exception being
+	 * thrown.
+	 */
 	protected void after() throws E {
 		// nothing per default
 	}
