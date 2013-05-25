@@ -1,5 +1,10 @@
 package bfrc.ast;
 
+/**
+ * Abstract super class for all Nodes of the AST.
+ * 
+ * @author oreissig
+ */
 public abstract class Node {
 	public final NodeType type;
 	public final String position;

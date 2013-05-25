@@ -2,7 +2,13 @@ package bfrc.ast;
 
 public abstract class ChangeNode extends Node {
 
+	/**
+	 * Flag stating whether the {@link #change} is relative or absolute
+	 */
 	public final boolean absolute;
+	/**
+	 * Change implied by this node.
+	 */
 	public int change;
 
 	public ChangeNode(NodeType type, String position, int change) {

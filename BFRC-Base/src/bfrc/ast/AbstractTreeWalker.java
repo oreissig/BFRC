@@ -4,6 +4,15 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.Iterator;
 
+/**
+ * Common base class for {@link TreeWalker} implementations, dealing with all
+ * the traversal logic. It provides methods, that may be overridden to react to
+ * specific events.
+ * 
+ * @author oreissig
+ *
+ * @param <E> exception type of this {@link TreeWalker}
+ */
 public abstract class AbstractTreeWalker<E extends Exception> implements TreeWalker<E> {
 
 	@Override
