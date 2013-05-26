@@ -31,7 +31,7 @@ Optimizers may be multiple entries separated by whitespace, that are called in t
 The Configuration `default.config` (in BFRC-Run) will always be loaded as first config and may be overridden by multiple configurations in the order they are named.
 
 #### BFRC-BF
-includes the default Brainfuck frontend (`-bf`) and an additional Brainfuck backend (`-bf-out`)
+includes the default Brainfuck frontend (`-bf`) and an additional Brainfuck backend (`-bf-out`).
 
 #### BFRC-C
 contains a backend (`-c`), that produces simple C files.
