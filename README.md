@@ -5,7 +5,7 @@ The project is designed as a tool for learning about compiler construction in an
 Although being kind of over-engineered for the purpose of compiling Brainfuck, this compiler features most of the architectural elements of a mature language compiler.
 Nevertheless, its simplicity allows beginners to implement extensions in the course of an afternoon instead of weeks of work.
 
-This project is licensed under a very liberal ISC license, see LICENSE file. This license was chosen especially
+This project is licensed under a liberal and easily understandable ISC license, see LICENSE file.
 
 The repository contains several sub-projects:
 #### BFRC-Base
