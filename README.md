@@ -11,11 +11,19 @@ The repository contains several sub-projects:
 #### BFRC-Base
 defines the common API used by all other projects, including the Abstract Syntax Tree (AST) structure.
 
-The general flow through a compiler is described in the following illustration. BFRC provides Interfaces for all active elements depicted.
+The general flow through a compiler is described in the following illustration.
+BFRC provides Interfaces for all active elements depicted.
 
+            1            2                           3                             4
     Input -----> Lexer -----> Parser -----+----------------------+-----> Backend -----> Output
                                           |                      |
                                           +----- Optimizer <-----+
+where
+
+1. is a stream of Characters,
+2. is a stream of Tokens,
+3. is the AST,
+4. is dependent upon the backend. It may be a stream of Bytes, a stream of Characters or nothing at all (interpreter).
 
 #### BFRC-Run
 provides the runtime environment to execute the compiler.
