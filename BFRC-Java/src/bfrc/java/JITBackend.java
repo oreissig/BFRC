@@ -4,11 +4,10 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import bfrc.ast.Node;
-import bfrc.backend.Backend;
-
 import javassist.CannotCompileException;
 import javassist.CtClass;
+import bfrc.ast.Node;
+import bfrc.backend.Backend;
 
 public class JITBackend implements Backend {
 
@@ -29,12 +28,16 @@ public class JITBackend implements Backend {
 	@Override
 	public void work(Node root) throws IOException {
 		Method m;
+		CtClass clazz = null;
 		try {
-			CtClass clazz = helper.create(className, root);
+			clazz = helper.create(className, root);
 			Class<?> compiled = clazz.toClass();
 			m = compiled.getMethod("main");
 		} catch (CannotCompileException | NoSuchMethodException e) {
 			throw new IllegalArgumentException("invalid class", e);
+		} finally {
+			if (clazz != null)
+				clazz.detach();
 		}
 		// call static method
 		try {
