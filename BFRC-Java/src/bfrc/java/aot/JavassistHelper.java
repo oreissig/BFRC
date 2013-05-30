@@ -1,4 +1,4 @@
-package bfrc.java;
+package bfrc.java.aot;
 
 import java.util.Deque;
 
@@ -14,6 +14,16 @@ import bfrc.ast.Node;
 import bfrc.ast.NodeType;
 
 public class JavassistHelper extends AbstractTreeWalker<CannotCompileException> {
+
+	public static final String HEADER = "";
+	public static final String FOOTER = "";
+	public static final String VALUE_REL = "mem[ptr]+=";
+	public static final String VALUE_ABS = "mem[ptr]=";
+	public static final String POINTER = "ptr+=";
+	public static final String READ = "mem[ptr]=System.in.read();";
+	public static final String PRINT = "System.out.print((char)mem[ptr]);";
+	public static final String LOOP_HEADER = "while(mem[ptr]!=0){";
+	public static final String LOOP_FOOTER = "}";
 
 	private String className;
 	private StringBuilder body;

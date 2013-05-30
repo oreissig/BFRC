@@ -1,4 +1,4 @@
-package bfrc.java;
+package bfrc.java.aot;
 
 import java.io.IOException;
 
