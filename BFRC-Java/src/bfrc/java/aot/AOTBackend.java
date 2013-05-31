@@ -9,7 +9,7 @@ import javassist.CtClass;
 import bfrc.ast.Node;
 import bfrc.backend.Backend;
 
-public class JITBackend implements Backend {
+public class AOTBackend implements Backend {
 
 	private static final String className = "Temp";
 	private final JavassistHelper helper = new JavassistHelper();
