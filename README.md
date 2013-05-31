@@ -48,7 +48,10 @@ contains a backend (`-c`), that produces simple C files.
 provides a backend, that creates a cool Graph representation of the AST based on the [DOT-language](https://en.wikipedia.org/wiki/DOT_%28graph_description_language%29) (`-dot`), that may be rendered by a tool like [Graphviz](http://graphviz.org/).
 
 #### BFRC-Java
-uses Javassist (required library) to compile a Java class, that can be executed in RAM (`-jit`) or saved to disk (`-java`).
+uses Javassist (required library) to create Java Bytecode. There are several options available:
+* `-java` compiles the whole input and safes it as a `.class` file to disk.
+* `-aot` is just like `-java`, but instead of saving to disk the class is directly executed in RAM.
+* `-jit` compiles the code just in time on a per-block (loop) basis.
 
 #### BFRC-Ook
 provides an additional frontend, that lexes the [Ook! language](http://www.dangermouse.net/esoteric/ook.html) (`-ook`) while utilizing BFRC-BF's parser. It also includes a backend (`-ook-out`).
