@@ -38,7 +38,7 @@ public class CGenerator extends AbstractTreeWalker<IOException> implements Backe
 			case ROOT:
 				out.write("int main() {\n");
 				indent(stack);
-				out.write("\tchar array[9001];\n");
+				out.write("\tchar array[" + MEM_SIZE + "];\n");
 				indent(stack);
 				out.write("\tchar *ptr = array;\n\n");
 				break;

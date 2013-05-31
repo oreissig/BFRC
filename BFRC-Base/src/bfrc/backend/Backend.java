@@ -12,6 +12,11 @@ import bfrc.ast.TreeWalker;
 public interface Backend extends TreeWalker<IOException> {
 
 	/**
+	 * The predefined size of a program's working memory array.
+	 */
+	public int MEM_SIZE = 9001;
+
+	/**
 	 * Specifies the output for this backend.
 	 * 
 	 * @param output backend-specific destination for code generation

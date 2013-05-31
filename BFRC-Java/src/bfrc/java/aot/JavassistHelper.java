@@ -12,6 +12,7 @@ import bfrc.ast.BlockNode;
 import bfrc.ast.ChangeNode;
 import bfrc.ast.Node;
 import bfrc.ast.NodeType;
+import bfrc.backend.Backend;
 
 public class JavassistHelper extends AbstractTreeWalker<CannotCompileException> {
 
@@ -50,7 +51,7 @@ public class JavassistHelper extends AbstractTreeWalker<CannotCompileException> 
 		switch (node.type) {
 			case ROOT:
 				body.append("{")
-				    .append("byte[] mem=new byte[10000];")
+				    .append("byte[] mem=new byte[" + Backend.MEM_SIZE + "];")
 				    .append("int ptr=0;");
 				break;
 			case LOOP:
