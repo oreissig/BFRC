@@ -2,7 +2,7 @@ package bfrc.ast;
 
 public class OutputNode extends Node {
 
-	public OutputNode(String position) {
-		super(NodeType.OUTPUT, position);
+	public OutputNode(int line, int offset) {
+		super(NodeType.OUTPUT, line, offset);
 	}
 }

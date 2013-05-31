@@ -67,38 +67,38 @@ public class BFParser implements Parser {
 			// next token
 			t = in.next();
 		}
-		throw new ParserException("loop at " + loop.position +
+		throw new ParserException("loop at " + loop.position() +
 				" has no according ']'");
 	}
 
 	private void common(BlockNode context, Token t) {
 		switch (t.type) {
 			case PLUS:
-				Node n = new ValueNode(t.pos, +1);
+				Node n = new ValueNode(t.line, t.offset, +1);
 				context.sub.add(n);
 				break;
 			case MINUS:
-				n = new ValueNode(t.pos, -1);
+				n = new ValueNode(t.line, t.offset, -1);
 				context.sub.add(n);
 				break;
 			case LEFT:
-				n = new PointerNode(t.pos, -1);
+				n = new PointerNode(t.line, t.offset, -1);
 				context.sub.add(n);
 				break;
 			case RIGHT:
-				n = new PointerNode(t.pos, +1);
+				n = new PointerNode(t.line, t.offset, +1);
 				context.sub.add(n);
 				break;
 			case IN:
-				n = new InputNode(t.pos);
+				n = new InputNode(t.line, t.offset);
 				context.sub.add(n);
 				break;
 			case OUT:
-				n = new OutputNode(t.pos);
+				n = new OutputNode(t.line, t.offset);
 				context.sub.add(n);
 				break;
 			case BEGIN:
-				BlockNode ln = new LoopNode(t.pos);
+				BlockNode ln = new LoopNode(t.line, t.offset);
 				loop(ln);
 				context.sub.add(ln);
 				break;

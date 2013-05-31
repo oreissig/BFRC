@@ -49,17 +49,17 @@ public class AbsolutifyLoops extends AbstractTreeWalker<OptimizerException>
 			// no relative change || absolute change to != 0 => infinite loop
 			if ((!vn.absolute && vn.change == 0) ||
 				(vn.absolute && vn.change != 0))
-				throw new OptimizerException("loop at " + n.position +
+				throw new OptimizerException("loop at " + n.position() +
 						" can never end");
 			// even relative loop increments might never end
 			if (!vn.absolute && vn.change % 2 == 0) {
-				System.err.println("loop at " + n.position +
+				System.err.println("loop at " + n.position() +
 						" may never end, did not optimize");
 				continue;
 			}
 
 			// replace block by absolute value
-			Node abs = new ValueNode(n.position, 0, true);
+			Node abs = new ValueNode(n.line, n.offset, 0, true);
 			block.sub.set(i, abs);
 		}
 	}

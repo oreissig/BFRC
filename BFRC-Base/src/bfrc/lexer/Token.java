@@ -6,15 +6,17 @@ public class Token {
 	}
 
 	public final TokenType type;
-	public final String pos;
+	public final int line;
+	public final int offset;
 
 	public Token(TokenType type, int line, int offset) {
 		this.type = type;
-		this.pos = line + ":" + offset;
+		this.line = line;
+		this.offset = offset;
 	}
 
 	@Override
 	public String toString() {
-		return pos + "-" + type;
+		return line + ":" + offset + "-" + type;
 	}
 }

@@ -11,18 +11,32 @@ public abstract class Node {
 	 */
 	public final NodeType type;
 	/**
-	 * Position in the source file, where the structure represented by this
+	 * Line number of the source file, where the structure represented by this
 	 * node has been defined.
 	 */
-	public final String position;
+	public final int line;
+	/**
+	 * Offset in the source line, where the structure represented by this
+	 * node has been defined.
+	 */
+	public final int offset;
 
-	public Node(NodeType type, String position) {
+	public Node(NodeType type, int line, int offset) {
 		this.type = type;
-		this.position = position;
+		this.line = line;
+		this.offset = offset;
+	}
+
+	/**
+	 * @return Position in the source file, where the structure represented by
+	 * this node has been defined.
+	 */
+	public String position() {
+		return line + ":" + offset;
 	}
 
 	@Override
 	public String toString() {
-		return position + "-" + type;
+		return position() + "-" + type;
 	}
 }

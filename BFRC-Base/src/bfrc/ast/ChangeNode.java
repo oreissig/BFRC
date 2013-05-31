@@ -11,12 +11,12 @@ public abstract class ChangeNode extends Node {
 	 */
 	public int change;
 
-	public ChangeNode(NodeType type, String position, int change) {
-		this(type, position, change, false);
+	public ChangeNode(NodeType type, int line, int offset, int change) {
+		this(type, line, offset, change, false);
 	}
 
-	public ChangeNode(NodeType type, String position, int change, boolean absolute) {
-		super(type, position);
+	public ChangeNode(NodeType type, int line, int offset, int change, boolean absolute) {
+		super(type, line, offset);
 		this.change = change;
 		this.absolute = absolute;
 	}

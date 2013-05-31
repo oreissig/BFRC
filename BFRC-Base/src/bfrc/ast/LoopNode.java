@@ -2,7 +2,7 @@ package bfrc.ast;
 
 public class LoopNode extends BlockNode {
 
-	public LoopNode(String position) {
-		super(NodeType.LOOP, position);
+	public LoopNode(int line, int offset) {
+		super(NodeType.LOOP, line, offset);
 	}
 }
