@@ -49,7 +49,7 @@ provides a backend, that creates a cool Graph representation of the AST based on
 
 #### BFRC-Java
 uses Javassist (required library) to create Java Bytecode. There are several options available:
-* `-java` compiles the whole input and safes it as a `.class` file to disk.
+* `-java` compiles the whole input and saves it as a `.class` file to disk.
 * `-aot` is just like `-java`, but instead of saving to disk the class is directly executed in RAM.
 * `-jit` compiles the code just in time on a per-block (loop) basis.
 
