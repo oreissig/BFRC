@@ -15,16 +15,6 @@ import bfrc.ast.NodeType;
 
 public class JavassistHelper extends AbstractTreeWalker<CannotCompileException> {
 
-	public static final String HEADER = "";
-	public static final String FOOTER = "";
-	public static final String VALUE_REL = "mem[ptr]+=";
-	public static final String VALUE_ABS = "mem[ptr]=";
-	public static final String POINTER = "ptr+=";
-	public static final String READ = "mem[ptr]=System.in.read();";
-	public static final String PRINT = "System.out.print((char)mem[ptr]);";
-	public static final String LOOP_HEADER = "while(mem[ptr]!=0){";
-	public static final String LOOP_FOOTER = "}";
-
 	private String className;
 	private StringBuilder body;
 	private CtClass c;
@@ -71,11 +61,11 @@ public class JavassistHelper extends AbstractTreeWalker<CannotCompileException> 
 				if (cn.absolute)
 					body.append("mem[ptr]=" + cn.change + ";");
 				else
-					body.append("mem[ptr]+=" + cn.change + ";");
+					body.append("mem[ptr]" + varChange(cn.change) + ";");
 				break;
 			case POINTER:
 				cn = (ChangeNode) node;
-				body.append("ptr+=" + cn.change + ";");
+				body.append("ptr" + varChange(cn.change) + ";");
 				break;
 			case INPUT:
 				body.append("mem[ptr]=System.in.read();");
@@ -94,5 +84,21 @@ public class JavassistHelper extends AbstractTreeWalker<CannotCompileException> 
 		if (node.type == NodeType.ROOT)
 			body.append("return mem[ptr];");
 		body.append("}");
+	}
+
+	private String varChange(int change) {
+		if (change > 0) {
+			if (change == 1)
+				return "++";
+			else
+				return "+=" + change;
+		} else if (change < 0) {
+			int abs = -change;
+			if (abs == 1)
+				return "--";
+			else
+				return "-=" + abs;
+		} else
+			return ""; // no change
 	}
 }
