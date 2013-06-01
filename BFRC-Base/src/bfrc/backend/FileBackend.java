@@ -3,7 +3,7 @@ package bfrc.backend;
 import java.io.IOException;
 
 /**
- * Common interface for all BFRC backends.
+ * Common interface for all BFRC backends, that produce an output file.
  * 
  * @author oreissig
  */

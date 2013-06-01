@@ -10,6 +10,14 @@ import bfrc.ast.BlockNode;
 import bfrc.ast.Node;
 import bfrc.backend.FileBackend;
 
+/**
+ * This backend creates a graph representation of the AST, that can be
+ * rendered by a tool like <a href="http://www.graphviz.org/">Graphviz</a>.
+ * 
+ * @author oreissig
+ * 
+ * @see <a href="http://www.graphviz.org/content/dot-language">The DOT Language</a>
+ */
 public class DotGrapher extends AbstractTreeWalker<IOException> implements FileBackend {
 	private Writer out;
 

@@ -12,6 +12,11 @@ import bfrc.ast.Node;
 import bfrc.ast.NodeType;
 import bfrc.backend.FileBackend;
 
+/**
+ * This is a backend for creating Ook source code from the given AST.
+ * 
+ * @author oreissig
+ */
 public class OokBackend extends AbstractTreeWalker<IOException> implements FileBackend {
 	private Writer out;
 

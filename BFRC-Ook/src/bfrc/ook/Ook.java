@@ -8,6 +8,11 @@ import java.util.Map;
 
 import bfrc.lexer.Token.TokenType;
 
+/**
+ * This class describes the basic syntactic elements of the Ook language.
+ * 
+ * @author oreissig
+ */
 public enum Ook {
 
 	Period("Ook."),

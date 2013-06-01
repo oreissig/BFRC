@@ -14,16 +14,25 @@ import bfrc.ast.Node;
 import bfrc.ast.NodeType;
 import bfrc.backend.Backend;
 
+/**
+ * This helper class generates a Java class, whose only method contains the
+ * program represented by the given AST.
+ * The generated Java code is not intended to be human-readable.
+ * 
+ * @author oreissig
+ */
 public class JavassistHelper extends AbstractTreeWalker<CannotCompileException> {
 
-	private String className;
 	private StringBuilder body;
 	private CtClass c;
 
-	public CtClass create(String className, Node root) throws CannotCompileException {
-		this.className = className;
+	public synchronized CtClass create(String className, Node root)
+			throws CannotCompileException {
+		ClassPool cp = ClassPool.getDefault();
+		c = cp.makeClass(className);
+
 		work(root);
-		
+
 		CtClass result = c;
 		c = null;
 		return result;
@@ -31,8 +40,6 @@ public class JavassistHelper extends AbstractTreeWalker<CannotCompileException> 
 
 	@Override
 	protected void before() {
-		ClassPool cp = ClassPool.getDefault();
-		c = cp.makeClass(className);
 		body = new StringBuilder("public static int main()");
 	}
 

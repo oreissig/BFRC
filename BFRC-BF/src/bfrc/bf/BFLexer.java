@@ -9,6 +9,11 @@ import bfrc.lexer.Lexer;
 import bfrc.lexer.LexicalException;
 import bfrc.lexer.Token;
 
+/**
+ * This is BFRC's default lexer implementation for the Brainfuck language.
+ * 
+ * @author oreissig
+ */
 public class BFLexer implements Lexer {
 	private Reader in;
 	private int lineNo;

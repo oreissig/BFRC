@@ -1,5 +1,10 @@
 package bfrc.ook;
 
+/**
+ * A semantic element consisting of two Ook words.
+ * 
+ * @author oreissig
+ */
 public class OokTuple {
 	public final Ook ook1;
 	public final Ook ook2;

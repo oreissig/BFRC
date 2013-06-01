@@ -14,6 +14,11 @@ import bfrc.lexer.Token.TokenType;
 import bfrc.parser.Parser;
 import bfrc.parser.ParserException;
 
+/**
+ * This is BFRC's default parser implementation for the Brainfuck language.
+ * 
+ * @author oreissig
+ */
 public class BFParser implements Parser {
 
 	private Lexer in;

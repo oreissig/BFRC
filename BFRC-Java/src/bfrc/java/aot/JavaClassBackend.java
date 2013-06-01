@@ -10,6 +10,14 @@ import javassist.NotFoundException;
 import bfrc.ast.Node;
 import bfrc.backend.FileBackend;
 
+/**
+ * This backend generates a Java class from the given AST and saves the resulting
+ * code as a .class file to disk. This class file contains a
+ * <tt>public static void main(String[] args)</tt> method, that exits the program
+ * with an exit code equal to the pointer's last value.
+ * 
+ * @author oreissig
+ */
 public class JavaClassBackend implements FileBackend {
 
 	public static final String main = "public static void main(String[] args) { System.exit(main()); }";

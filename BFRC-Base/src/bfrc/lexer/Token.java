@@ -1,6 +1,18 @@
 package bfrc.lexer;
 
+import bfrc.parser.Parser;
+
+/**
+ * Tokens represent the basic building blocks of a programming language, that
+ * are infered from source code by a {@link Lexer} and are consumed by a
+ * {@link Parser}.
+ * 
+ * @author oreissig
+ */
 public class Token {
+	/**
+	 * The basic elements of the Brainfuck language.
+	 */
 	public static enum TokenType {
 		PLUS, MINUS, LEFT, RIGHT, IN, OUT, BEGIN, END
 	}

@@ -18,6 +18,16 @@ import bfrc.ast.ChangeNode;
 import bfrc.ast.Node;
 import bfrc.backend.Backend;
 
+/**
+ * A JIT compiler implementation, that works on a per-block (loop) level.
+ * Whenever a loop is entered for the first time, the generated code calls back
+ * the compiler to create the requested block. The compiled code is then saved
+ * so that it will not need to be built again.
+ * 
+ * The generated Java code is not intended to be human-readable.
+ * 
+ * @author oreissig
+ */
 public class JITBackend extends JITContext implements Backend {
 
 	private static final String className = "Block";

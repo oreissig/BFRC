@@ -12,6 +12,13 @@ import bfrc.ast.Node;
 import bfrc.ast.NodeType;
 import bfrc.backend.FileBackend;
 
+/**
+ * This backend generates (fairly human-readable) C source code from the given
+ * AST. The resulting file only depends on stdio.h and may be compiled with
+ * any ANSI C compiler. 
+ * 
+ * @author oreissig
+ */
 public class CGenerator extends AbstractTreeWalker<IOException> implements FileBackend {
 	private Writer out;
 

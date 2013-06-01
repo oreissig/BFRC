@@ -9,6 +9,12 @@ import javassist.CtClass;
 import bfrc.ast.Node;
 import bfrc.backend.Backend;
 
+/**
+ * This backend generates a Java class from the given AST and directly
+ * executes the code in memory.
+ * 
+ * @author oreissig
+ */
 public class AOTBackend implements Backend {
 
 	private static final String className = "Temp";
