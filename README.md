@@ -41,6 +41,9 @@ The Configuration `default.config` (in BFRC-Run) will always be loaded as first 
 #### BFRC-BF
 includes the default Brainfuck frontend (`-bf`) and an additional Brainfuck backend (`-bf-out`).
 
+#### BFRC-Int
+contains a simple interpreter backend (`-int`), that directly traverses the AST.
+
 #### BFRC-C
 contains a backend (`-c`), that produces simple C files.
 

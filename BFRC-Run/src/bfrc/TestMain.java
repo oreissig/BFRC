@@ -11,7 +11,7 @@ public class TestMain {
 
 		File srcFile = createTempFile(src);
 
-		String[] backends = { "dot", "java", "c", "jit", "ook-out", "bf-out" };
+		String[] backends = { "dot", "c", "java", "aot", "jit", "int", "ook-out", "bf-out" };
 		String[] params = { null, srcFile.getAbsolutePath(), null };
 
 		for (String config : backends) {

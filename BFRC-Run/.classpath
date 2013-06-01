@@ -9,5 +9,6 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/BFRC-Java"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/BFRC-Ook"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/BFRC-Opts"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/BFRC-Int"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
