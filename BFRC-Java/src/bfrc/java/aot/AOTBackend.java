@@ -15,17 +15,6 @@ public class AOTBackend implements Backend {
 	private final JavassistHelper helper = new JavassistHelper();
 
 	@Override
-	public void setOutput(String output) {
-		// nothing to do here
-	}
-
-	@Override
-	public String getDefaultExtension() {
-		// hack, provide class name as extension
-		return className;
-	}
-
-	@Override
 	public void work(Node root) throws IOException {
 		Method m;
 		CtClass clazz = null;

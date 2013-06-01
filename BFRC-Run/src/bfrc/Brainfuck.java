@@ -10,6 +10,7 @@ import java.util.Properties;
 
 import bfrc.ast.BlockNode;
 import bfrc.backend.Backend;
+import bfrc.backend.FileBackend;
 import bfrc.lexer.Lexer;
 import bfrc.optimizer.Optimizer;
 import bfrc.parser.Parser;
@@ -57,9 +58,12 @@ public class Brainfuck {
 
 		String backendClass = props.getProperty("bfrc.backend");
 		Backend b = instantiate(Backend.class, backendClass);
-		if (outFile == null)
-			outFile = inFile + '.' + b.getDefaultExtension();
-		b.setOutput(outFile);
+		if (b instanceof FileBackend) {
+			FileBackend fb = (FileBackend) b;
+			if (outFile == null)
+				outFile = inFile + '.' + fb.getDefaultExtension();
+			fb.setOutput(outFile);
+		}
 
 		// do the compilation
 		BlockNode ast = p.parse(l);

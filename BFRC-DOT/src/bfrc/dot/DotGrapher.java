@@ -8,9 +8,9 @@ import java.util.Deque;
 import bfrc.ast.AbstractTreeWalker;
 import bfrc.ast.BlockNode;
 import bfrc.ast.Node;
-import bfrc.backend.Backend;
+import bfrc.backend.FileBackend;
 
-public class DotGrapher extends AbstractTreeWalker<IOException> implements Backend {
+public class DotGrapher extends AbstractTreeWalker<IOException> implements FileBackend {
 	private Writer out;
 
 	@Override

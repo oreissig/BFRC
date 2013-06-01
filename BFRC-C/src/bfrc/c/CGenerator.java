@@ -10,9 +10,9 @@ import bfrc.ast.BlockNode;
 import bfrc.ast.ChangeNode;
 import bfrc.ast.Node;
 import bfrc.ast.NodeType;
-import bfrc.backend.Backend;
+import bfrc.backend.FileBackend;
 
-public class CGenerator extends AbstractTreeWalker<IOException> implements Backend {
+public class CGenerator extends AbstractTreeWalker<IOException> implements FileBackend {
 	private Writer out;
 
 	@Override

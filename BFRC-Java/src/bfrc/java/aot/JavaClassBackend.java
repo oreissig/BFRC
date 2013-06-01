@@ -8,9 +8,9 @@ import javassist.CtMethod;
 import javassist.CtNewMethod;
 import javassist.NotFoundException;
 import bfrc.ast.Node;
-import bfrc.backend.Backend;
+import bfrc.backend.FileBackend;
 
-public class JavaClassBackend implements Backend {
+public class JavaClassBackend implements FileBackend {
 
 	public static final String main = "public static void main(String[] args) { System.exit(main()); }";
 	private final JavassistHelper helper = new JavassistHelper();

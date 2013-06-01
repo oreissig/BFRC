@@ -140,15 +140,4 @@ public class JITBackend extends JITContext implements Backend {
 					fields.toString() + ": " + code, e);
 		}
 	}
-
-	@Override
-	public void setOutput(String output) {
-		// nothing to do here
-	}
-
-	@Override
-	public String getDefaultExtension() {
-		// hack, provide class name as extension
-		return className;
-	}
 }
