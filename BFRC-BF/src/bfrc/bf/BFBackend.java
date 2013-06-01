@@ -61,6 +61,8 @@ public class BFBackend extends AbstractTreeWalker<IOException> implements Backen
 					// set to 0
 					out.write("[-]");
 					// shorten wrap-arounds
+					while (count > 255)
+						count -= 256;
 					while (count < 0)
 						count += 256;
 					// take the shorter route

@@ -61,6 +61,8 @@ public class OokBackend extends AbstractTreeWalker<IOException> implements Backe
 					// set to 0
 					out.write("Ook! Ook? Ook! Ook! Ook? Ook! ");
 					// shorten wrap-arounds
+					while (count > 255)
+						count -= 256;
 					while (count < 0)
 						count += 256;
 					// take the shorter route
