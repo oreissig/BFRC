@@ -1,7 +1,6 @@
 package bfrc.java.jit;
 
 import static javassist.Modifier.*;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -31,6 +30,9 @@ import bfrc.backend.Backend;
 public class JITBackend extends JITContext implements Backend {
 
 	private static final String className = "Block";
+	private static final boolean writeClasses = true;
+	private static final boolean trace = false;
+
 	private final List<BlockNode> blocks = new ArrayList<>();
 	private final ClassPool cp = ClassPool.getDefault();
 	private final CtClass blockType;
@@ -61,6 +63,9 @@ public class JITBackend extends JITContext implements Backend {
 
 	@Override
 	public JITBlock compile(int blockID) {
+		if (trace)
+			new Trace(blockID).printStackTrace();
+		
 		int blocksBefore = blocks.size();
 		BlockNode block = blocks.get(blockID);
 		String method = buildMethod(block);
@@ -138,12 +143,13 @@ public class JITBackend extends JITContext implements Backend {
 					"call", paramTypes, null, '{' + code + '}', c);
 			c.addMethod(m);
 
-			// TODO optionally write temp classes or source code to disk
-			try {
-				c.writeFile();
-			} catch (NotFoundException | IOException e) {
-				e.printStackTrace();
-			}
+			if (writeClasses)
+				try {
+					c.writeFile();
+				} catch (Exception e) {
+					e.printStackTrace(); // do not abort
+				}
+
 			return c.toClass();
 		} catch (CannotCompileException e) {
 			throw new RuntimeException("could not compile " + className +
