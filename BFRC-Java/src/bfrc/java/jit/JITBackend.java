@@ -150,7 +150,9 @@ public class JITBackend extends JITContext implements Backend {
 					e.printStackTrace(); // do not abort
 				}
 
-			return c.toClass();
+			Class<? extends JITBlock> built = c.toClass();
+			c.detach();
+			return built;
 		} catch (CannotCompileException e) {
 			throw new RuntimeException("could not compile " + className +
 					fields.toString() + ": " + code, e);
