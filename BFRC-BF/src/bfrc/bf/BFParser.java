@@ -16,6 +16,14 @@ import bfrc.parser.ParserException;
 
 /**
  * This is BFRC's default parser implementation for the Brainfuck language.
+ * <p>
+ * 
+ * This parser is based on the following grammar:
+ * <tt><ul>
+ * <li>program := operation*</li>
+ * <li>operation := "+" | "-" | "<" | ">" | "." | "," | loop</li>
+ * <li>loop := "[" operation* "]"</li>
+ * </ul></tt>
  * 
  * @author oreissig
  */
@@ -28,7 +36,7 @@ public class BFParser implements Parser {
 		in = input;
 
 		BlockNode ast = new RootNode();
-		root(ast);
+		program(ast);
 
 		in = null;
 		return ast;
@@ -40,14 +48,14 @@ public class BFParser implements Parser {
 	 * 
 	 * @param root block
 	 */
-	private void root(BlockNode root) {
+	private void program(BlockNode root) {
 		Token t = in.next();
 
 		while (t != null) {
 			if (t.type == TokenType.END)
 				throw new ParserException("extra ']' without matching '['");
 			else
-				common(root, t);
+				operation(root, t);
 
 			// next token
 			t = in.next();
@@ -67,7 +75,7 @@ public class BFParser implements Parser {
 			if (t.type == TokenType.END)
 				return;
 			else
-				common(loop, t);
+				operation(loop, t);
 
 			// next token
 			t = in.next();
@@ -76,7 +84,7 @@ public class BFParser implements Parser {
 				" has no according ']'");
 	}
 
-	private void common(BlockNode context, Token t) {
+	private void operation(BlockNode context, Token t) {
 		switch (t.type) {
 			case PLUS:
 				Node n = new ValueNode(t.line, t.offset, +1);
