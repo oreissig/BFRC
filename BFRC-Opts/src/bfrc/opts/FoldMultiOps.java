@@ -30,7 +30,7 @@ public class FoldMultiOps extends AbstractTreeWalker<OptimizerException>
 
 	@Override
 	protected boolean enter(BlockNode block, Deque<BlockNode> stack) {
-		ChangeNode last = null;
+		ChangeNode previous = null;
 
 		List<Node> nodes = block.sub;
 		for (int i = 0; i < nodes.size(); i++) {
@@ -39,23 +39,23 @@ public class FoldMultiOps extends AbstractTreeWalker<OptimizerException>
 				ChangeNode cn = (ChangeNode) n;
 				// do not merge absolute ChangeNodes
 				if (cn.absolute) {
-					last = null;
+					previous = null;
 					continue;
 				}
 
-				if (last != null && cn.type == last.type) {
+				if (previous != null && cn.type == previous.type) {
 					// merge nodes
-					last.change += cn.change;
+					previous.change += cn.change;
 					nodes.remove(i);
 					// mind the reduced node count
 					i--;
 				} else {
 					// first of its kind
-					last = cn;
+					previous = cn;
 				}
 			} else {
 				// different type, reset
-				last = null;
+				previous = null;
 			}
 		}
 
