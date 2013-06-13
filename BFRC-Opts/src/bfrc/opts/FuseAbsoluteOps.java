@@ -16,7 +16,7 @@ import bfrc.optimizer.OptimizerException;
  * <p>
  * For example, {@code -3 =0 +2} will result in {@code =2}.
  * <p>
- * This should be applied after {@link AbsolutifyLoops} has been performed.
+ * This must be applied after {@link AbsolutifyLoops} has been performed.
  * 
  * @author oreissig
  */

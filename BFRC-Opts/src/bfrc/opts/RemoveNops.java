@@ -13,7 +13,7 @@ import bfrc.optimizer.OptimizerException;
  * This optimization removes relative {@link ChangeNode ChangeNodes}
  * (POINTER, VALUE), whose {@link ChangeNode#change change} is zero.
  * <p>
- * This should be applied after {@link FoldMultiOps} has been performed.
+ * This must be applied after {@link FoldMultiOps} has been performed.
  * 
  * @author oreissig
  */
