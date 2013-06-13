@@ -20,7 +20,9 @@ import bfrc.optimizer.OptimizerException;
  * <p>
  * For example, {@code [-]} will become {@code =0}.
  * <p>
- * This should be applied after {@link FoldMultiOps} has been performed.
+ * This must be applied after {@link FoldMultiOps} has been performed.
+ * If {@link RemoveRedundantLoops} is being run, it should also be performed
+ * in beforehand.
  * 
  * @author oreissig
  */
