@@ -12,7 +12,7 @@ class Trace extends Throwable {
 		StackTraceElement[] stack = getStackTrace();
 
 		int end = 1; // skip JITBackend.compile
-		while (!stack[end++].getMethodName().equals("work"))
+		while (!stack[end++].getClassName().equals(JITBackend.class.getName()))
 			;
 		end--;
 
