@@ -4,7 +4,7 @@ import bfrc.parser.Parser;
 
 /**
  * Tokens represent the basic building blocks of a programming language, that
- * are infered from source code by a {@link Lexer} and are consumed by a
+ * are inferred from source code by a {@link Lexer} and are consumed by a
  * {@link Parser}.
  * 
  * @author oreissig
