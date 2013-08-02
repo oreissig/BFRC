@@ -10,6 +10,7 @@ import bfrc.backend.Backend;
  */
 public abstract class JITContext {
 
+	public static final byte COMPILE_THRESHOLD = 3;
 	public final byte[] mem;
 	public int ptr = 0;
 
@@ -22,4 +23,6 @@ public abstract class JITContext {
 	}
 
 	public abstract JITBlock compile(int blockID);
+
+	public abstract JITBlock interpret(int blockID);
 }

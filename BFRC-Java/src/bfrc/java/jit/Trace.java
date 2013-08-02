@@ -5,8 +5,8 @@ import java.util.Arrays;
 @SuppressWarnings("serial")
 class Trace extends Throwable {
 
-	public Trace(int blockID) {
-		super("compile block " + blockID);
+	public Trace(String verb, int blockID) {
+		super(verb + " block " + blockID);
 
 		// just print calls inside the JIT
 		StackTraceElement[] stack = getStackTrace();

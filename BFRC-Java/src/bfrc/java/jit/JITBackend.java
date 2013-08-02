@@ -62,18 +62,25 @@ public class JITBackend extends JITContext implements Backend {
 	}
 
 	@Override
+	public JITBlock interpret(int blockID) {
+		if (trace)
+			new Trace("interpret", blockID).printStackTrace();
+		return new InterpretedJITBlock(blocks.get(blockID));
+	}
+
+	@Override
 	public JITBlock compile(int blockID) {
 		if (trace)
-			new Trace(blockID).printStackTrace();
+			new Trace("compile", blockID).printStackTrace();
 		
 		int blocksBefore = blocks.size();
 		BlockNode block = blocks.get(blockID);
 		String method = buildMethod(block);
 		int blocksAfter = blocks.size();
 
-		Collection<String> newBlocks = new ArrayList<>(blocksAfter - blocksBefore);
+		Collection<Integer> newBlocks = new ArrayList<>(blocksAfter - blocksBefore);
 		for (int i=blocksBefore; i<blocksAfter; i++)
-			newBlocks.add("b" + i);
+			newBlocks.add(i);
 
 		Class<? extends JITBlock> clazz = buildClass(className + 'L' + block.line + "P" + block.offset,
 				newBlocks, method);
@@ -91,10 +98,14 @@ public class JITBackend extends JITContext implements Backend {
 			case LOOP:
 				BlockNode nested = (BlockNode) n;
 				int id = add(nested);
-				body.append("if($1.mem[$1.ptr]!=0){")
-					.append("if(b" + id + "==null)b" + id + "=$1.compile(" + id + ");")
-					.append("while(b" + id + ".call($1)!=0);")
-					.append("}");
+				body.append("if($1.mem[$1.ptr]!=0)")
+				    .append("do{")
+				    .append("switch(c" + id + "++){")
+				    .append("case 0:b" + id + "=$1.interpret(" + id + ");break;")
+				    .append("case " + COMPILE_THRESHOLD + ":b" + id + "=$1.compile(" + id + ");")
+				    .append("}")
+				    .append("b" + id + ".call($1);")
+				    .append("}while($1.mem[$1.ptr]!=0);");
 				break;
 			case VALUE:
 				ChangeNode cn = (ChangeNode) n;
@@ -117,7 +128,6 @@ public class JITBackend extends JITContext implements Backend {
 				throw new RuntimeException("unexpected node: " + n.type);
 			}
 		}
-		body.append("return $1.mem[$1.ptr];");
 		return body.toString();
 	}
 
@@ -129,17 +139,19 @@ public class JITBackend extends JITContext implements Backend {
 
 	@SuppressWarnings("unchecked")	// it really creates JITCallable classes
 	private Class<? extends JITBlock> buildClass(String className,
-			Collection<String> fields, String code) {
+			Collection<Integer> blockIDs, String code) {
 		try {
 			CtClass c = cp.makeClass(className);
 			c.addInterface(blockType);
 
-			for (String fieldName : fields) {
-				CtField f = new CtField(blockType, fieldName, c);
-				c.addField(f);
+			for (int blockID : blockIDs) {
+				CtField block = new CtField(blockType, "b" + blockID, c);
+				c.addField(block);
+				CtField count = new CtField(CtClass.byteType, "c" + blockID, c);
+				c.addField(count);
 			}
 
-			CtMethod m = CtNewMethod.make(PUBLIC | FINAL, CtClass.intType,
+			CtMethod m = CtNewMethod.make(PUBLIC | FINAL, CtClass.voidType,
 					"call", paramTypes, null, '{' + code + '}', c);
 			c.addMethod(m);
 
@@ -155,7 +167,7 @@ public class JITBackend extends JITContext implements Backend {
 			return built;
 		} catch (CannotCompileException e) {
 			throw new RuntimeException("could not compile " + className +
-					fields.toString() + ": " + code, e);
+					blockIDs + ": " + code, e);
 		}
 	}
 }

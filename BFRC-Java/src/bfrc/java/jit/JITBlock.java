@@ -9,5 +9,5 @@ import java.io.IOException;
  */
 public interface JITBlock {
 
-	public int call(final JITContext c) throws IOException;
+	public void call(final JITContext c) throws IOException;
 }
