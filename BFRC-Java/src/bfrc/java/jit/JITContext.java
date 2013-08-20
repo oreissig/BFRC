@@ -8,7 +8,7 @@ import bfrc.backend.Backend;
  * 
  * @author oreissig
  */
-abstract class JITContext {
+public abstract class JITContext {
 
 	public static final byte COMPILE_THRESHOLD = 3;
 	public final byte[] mem;

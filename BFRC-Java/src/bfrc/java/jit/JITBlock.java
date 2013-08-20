@@ -7,7 +7,7 @@ import java.io.IOException;
  * 
  * @author oreissig
  */
-interface JITBlock {
+public interface JITBlock {
 
 	public void call(final JITContext c) throws IOException;
 }
