@@ -3,7 +3,7 @@ package bfrc.java.jit;
 import java.util.Arrays;
 
 @SuppressWarnings("serial")
-class Trace extends Throwable {
+final class Trace extends Throwable {
 
 	public Trace(String verb, int blockID) {
 		super(verb + " block " + blockID);

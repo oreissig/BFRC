@@ -6,7 +6,7 @@ import bfrc.ast.BlockNode;
 import bfrc.ast.ChangeNode;
 import bfrc.ast.Node;
 
-public class InterpretedJITBlock implements JITBlock {
+final class InterpretedJITBlock implements JITBlock {
 
 	private final BlockNode block;
 

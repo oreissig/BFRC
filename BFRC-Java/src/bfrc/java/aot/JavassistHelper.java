@@ -21,7 +21,7 @@ import bfrc.backend.Backend;
  * 
  * @author oreissig
  */
-public class JavassistHelper extends AbstractTreeWalker<CannotCompileException> {
+class JavassistHelper extends AbstractTreeWalker<CannotCompileException> {
 
 	private StringBuilder body;
 	private CtClass c;

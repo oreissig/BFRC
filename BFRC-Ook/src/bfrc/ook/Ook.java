@@ -13,7 +13,7 @@ import bfrc.lexer.Token.TokenType;
  * 
  * @author oreissig
  */
-public enum Ook {
+enum Ook {
 
 	Period("Ook."),
 	Exclam("Ook!"),

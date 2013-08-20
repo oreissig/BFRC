@@ -5,7 +5,7 @@ package bfrc.ook;
  * 
  * @author oreissig
  */
-public class OokTuple {
+final class OokTuple {
 	public final Ook ook1;
 	public final Ook ook2;
 

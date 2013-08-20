@@ -5,7 +5,7 @@ package bfrc.java.aot;
  * 
  * @author oreissig
  */
-public interface Program {
+interface Program {
 	/**
 	 * Method containing all generated code
 	 * 
