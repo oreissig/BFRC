@@ -9,7 +9,7 @@ import bfrc.parser.Parser;
  * 
  * @author oreissig
  */
-public class Token {
+public final class Token {
 	/**
 	 * The basic elements of the Brainfuck language.
 	 */

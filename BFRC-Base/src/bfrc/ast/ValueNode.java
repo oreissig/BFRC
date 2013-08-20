@@ -1,6 +1,6 @@
 package bfrc.ast;
 
-public class ValueNode extends ChangeNode {
+public final class ValueNode extends ChangeNode {
 
 	public ValueNode(int line, int offset, int change) {
 		super(NodeType.VALUE, line, offset, change);
