@@ -1,7 +1,7 @@
 package bfrc.opts;
 
 import java.util.Deque;
-import java.util.List;
+import java.util.Iterator;
 
 import bfrc.ast.AbstractTreeVisitor;
 import bfrc.ast.BlockNode;
@@ -32,9 +32,9 @@ public class FoldMultiOps extends AbstractTreeVisitor<OptimizerException>
 	public void enter(BlockNode block, Deque<BlockNode> stack) {
 		ChangeNode previous = null;
 
-		List<Node> nodes = block.sub;
-		for (int i = 0; i < nodes.size(); i++) {
-			Node n = nodes.get(i);
+		Iterator<Node> nodes = block.sub.iterator();
+		while (nodes.hasNext()) {
+			Node n = nodes.next();
 			if (n instanceof ChangeNode) {
 				ChangeNode cn = (ChangeNode) n;
 				// do not merge absolute ChangeNodes
@@ -46,9 +46,7 @@ public class FoldMultiOps extends AbstractTreeVisitor<OptimizerException>
 				if (previous != null && cn.type == previous.type) {
 					// merge nodes
 					previous.change += cn.change;
-					nodes.remove(i);
-					// mind the reduced node count
-					i--;
+					nodes.remove();
 				} else {
 					// first of its kind
 					previous = cn;
