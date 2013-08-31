@@ -5,11 +5,12 @@ import java.io.IOException;
 import java.io.Writer;
 import java.util.Deque;
 
-import bfrc.ast.AbstractTreeWalker;
+import bfrc.ast.AbstractTreeVisitor;
 import bfrc.ast.BlockNode;
 import bfrc.ast.ChangeNode;
 import bfrc.ast.Node;
 import bfrc.ast.NodeType;
+import bfrc.ast.RootNode;
 import bfrc.backend.FileBackend;
 
 /**
@@ -19,7 +20,7 @@ import bfrc.backend.FileBackend;
  * 
  * @author oreissig
  */
-public class CGenerator extends AbstractTreeWalker<IOException> implements FileBackend {
+public class CGenerator extends AbstractTreeVisitor<IOException> implements FileBackend {
 	private Writer out;
 
 	@Override
@@ -33,18 +34,17 @@ public class CGenerator extends AbstractTreeWalker<IOException> implements FileB
 	}
 
 	@Override
-	protected void before() throws IOException {
+	public void before(RootNode root) throws IOException {
 		out.write("#include <stdio.h>\n\n");
+		out.write("int main() {\n");
 	}
 
 	@Override
-	protected boolean visit(Node node, Deque<BlockNode> stack) throws IOException {
+	public void visit(Node node, Deque<BlockNode> stack) throws IOException {
 		indent(stack);
 
 		switch (node.type) {
 			case ROOT:
-				out.write("int main() {\n");
-				indent(stack);
 				out.write("\tchar array[" + MEM_SIZE + "];\n");
 				indent(stack);
 				out.write("\tchar *ptr = array;\n\n");
@@ -73,11 +73,10 @@ public class CGenerator extends AbstractTreeWalker<IOException> implements FileB
 				throw new UnsupportedOperationException("unexpected node type "
 						+ node.type);
 		}
-		return true;
 	}
 
 	@Override
-	protected void leave(BlockNode node, Deque<BlockNode> stack)
+	public void leave(BlockNode node, Deque<BlockNode> stack)
 			throws IOException {
 		indent(stack);
 		if (node.type == NodeType.ROOT)
@@ -86,7 +85,7 @@ public class CGenerator extends AbstractTreeWalker<IOException> implements FileB
 	}
 
 	@Override
-	protected void after() throws IOException {
+	public void after(RootNode root) throws IOException {
 		out.close();
 	}
 

@@ -5,11 +5,12 @@ import java.io.IOException;
 import java.io.Writer;
 import java.util.Deque;
 
-import bfrc.ast.AbstractTreeWalker;
+import bfrc.ast.AbstractTreeVisitor;
 import bfrc.ast.BlockNode;
 import bfrc.ast.ChangeNode;
 import bfrc.ast.Node;
 import bfrc.ast.NodeType;
+import bfrc.ast.RootNode;
 import bfrc.backend.FileBackend;
 
 /**
@@ -17,7 +18,7 @@ import bfrc.backend.FileBackend;
  * 
  * @author oreissig
  */
-public class BFBackend extends AbstractTreeWalker<IOException> implements FileBackend {
+public class BFBackend extends AbstractTreeVisitor<IOException> implements FileBackend {
 	private Writer out;
 
 	@Override
@@ -31,7 +32,7 @@ public class BFBackend extends AbstractTreeWalker<IOException> implements FileBa
 	}
 
 	@Override
-	protected boolean visit(Node n, Deque<BlockNode> stack) throws IOException {
+	public void visit(Node n, Deque<BlockNode> stack) throws IOException {
 		switch (n.type) {
 			case ROOT:
 				// nothing to do here
@@ -88,19 +89,17 @@ public class BFBackend extends AbstractTreeWalker<IOException> implements FileBa
 				throw new UnsupportedOperationException("unexpected type: "
 						+ n.type);
 		}
-
-		return true;
 	}
 
 	@Override
-	protected void leave(BlockNode block, Deque<BlockNode> stack)
+	public void leave(BlockNode block, Deque<BlockNode> stack)
 			throws IOException {
 		if (block.type == NodeType.LOOP)
 			out.write(']');
 	}
 
 	@Override
-	protected void after() throws IOException {
+	public void after(RootNode root) throws IOException {
 		out.close();
 	}
 }

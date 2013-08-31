@@ -1,12 +1,11 @@
 package bfrc.java.aot;
 
-import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import javassist.CannotCompileException;
 import javassist.CtClass;
-import bfrc.ast.Node;
+import bfrc.ast.RootNode;
 import bfrc.backend.Backend;
 
 /**
@@ -21,7 +20,7 @@ public class AOTBackend implements Backend {
 	private final JavassistHelper helper = new JavassistHelper();
 
 	@Override
-	public void work(Node root) throws IOException {
+	public void work(RootNode root) {
 		Method m;
 		CtClass clazz = null;
 		try {

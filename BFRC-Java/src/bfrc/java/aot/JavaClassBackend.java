@@ -7,7 +7,7 @@ import javassist.CtClass;
 import javassist.CtMethod;
 import javassist.CtNewMethod;
 import javassist.NotFoundException;
-import bfrc.ast.Node;
+import bfrc.ast.RootNode;
 import bfrc.backend.FileBackend;
 
 /**
@@ -25,7 +25,7 @@ public class JavaClassBackend implements FileBackend {
 	private String className;
 
 	@Override
-	public void setOutput(String output) throws IOException {
+	public void setOutput(String output) {
 		this.className = output;
 	}
 
@@ -36,7 +36,7 @@ public class JavaClassBackend implements FileBackend {
 	}
 
 	@Override
-	public void work(Node root) throws IOException {
+	public void work(RootNode root) throws IOException {
 		CtClass c = null;
 		try {
 			c = helper.create(className, root);

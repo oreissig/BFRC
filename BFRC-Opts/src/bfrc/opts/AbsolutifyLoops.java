@@ -6,8 +6,9 @@ import static bfrc.ast.NodeType.VALUE;
 import java.util.Deque;
 import java.util.List;
 
-import bfrc.ast.AbstractTreeWalker;
+import bfrc.ast.AbstractTreeVisitor;
 import bfrc.ast.BlockNode;
+import bfrc.ast.ChangeNode;
 import bfrc.ast.Node;
 import bfrc.ast.ValueNode;
 import bfrc.optimizer.Optimizer;
@@ -26,11 +27,11 @@ import bfrc.optimizer.OptimizerException;
  * 
  * @author oreissig
  */
-public class AbsolutifyLoops extends AbstractTreeWalker<OptimizerException>
+public class AbsolutifyLoops extends AbstractTreeVisitor<OptimizerException>
 		implements Optimizer {
 
 	@Override
-	protected void leave(BlockNode block, Deque<BlockNode> stack)
+	public void leave(BlockNode block, Deque<BlockNode> stack)
 			throws OptimizerException {
 		// look for child elements like [-] or [+]
 		for (int i = 0; i < block.sub.size(); i++) {

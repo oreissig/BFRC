@@ -1,8 +1,9 @@
 package bfrc.opts;
 
 import java.util.Deque;
+import java.util.Iterator;
 
-import bfrc.ast.AbstractTreeWalker;
+import bfrc.ast.AbstractTreeVisitor;
 import bfrc.ast.BlockNode;
 import bfrc.ast.ChangeNode;
 import bfrc.ast.Node;
@@ -17,16 +18,19 @@ import bfrc.optimizer.OptimizerException;
  * 
  * @author oreissig
  */
-public class RemoveNops extends AbstractTreeWalker<OptimizerException>
+public class RemoveNops extends AbstractTreeVisitor<OptimizerException>
 		implements Optimizer {
 
 	@Override
-	protected boolean visit(Node n, Deque<BlockNode> stack) {
-		if (n instanceof ChangeNode) {
-			ChangeNode cn = (ChangeNode) n;
-			if (!cn.absolute && cn.change == 0)
-				return false;
+	public void leave(BlockNode block, Deque<BlockNode> stack) {
+		Iterator<Node> i = block.sub.iterator();
+		while (i.hasNext()) {
+			Node n = i.next();
+			if (n instanceof ChangeNode) {
+				ChangeNode cn = (ChangeNode) n;
+				if (!cn.absolute && cn.change == 0)
+					i.remove();
+			}
 		}
-		return true;
 	}
 }

@@ -1,5 +1,7 @@
 package bfrc.ast;
 
+import java.util.Deque;
+
 /**
  * Abstract super class for all Nodes of the AST.
  * 
@@ -16,8 +18,8 @@ public abstract class Node {
 	 */
 	public final int line;
 	/**
-	 * Offset in the source line, where the structure represented by this
-	 * node has been defined.
+	 * Offset in the source line, where the structure represented by this node
+	 * has been defined.
 	 */
 	public final int offset;
 
@@ -29,7 +31,7 @@ public abstract class Node {
 
 	/**
 	 * @return Position in the source file, where the structure represented by
-	 * this node has been defined.
+	 *         this node has been defined.
 	 */
 	public String position() {
 		return line + ":" + offset;
@@ -38,5 +40,21 @@ public abstract class Node {
 	@Override
 	public String toString() {
 		return position() + "-" + type;
+	}
+
+	/**
+	 * This method implements the node-specific behaviour used by the default
+	 * depth-first traversion mechanism.
+	 * 
+	 * @param visitor
+	 *            to traverse the AST
+	 * @param stack
+	 *            nesting path during traversion
+	 * @throws E
+	 *             exception thrown by the visitor
+	 */
+	public <E extends Exception> void visit(TreeVisitor<E> visitor,
+			Deque<BlockNode> stack) throws E {
+		visitor.visit(this, stack);
 	}
 }

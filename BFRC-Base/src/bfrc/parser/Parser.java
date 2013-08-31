@@ -1,6 +1,6 @@
 package bfrc.parser;
 
-import bfrc.ast.BlockNode;
+import bfrc.ast.RootNode;
 import bfrc.lexer.Lexer;
 import bfrc.lexer.Token;
 
@@ -18,6 +18,6 @@ public interface Parser {
 	 * @return root node of AST
 	 * @throws ParserException
 	 */
-	public BlockNode parse(Lexer input) throws ParserException;
+	public RootNode parse(Lexer input) throws ParserException;
 
 }

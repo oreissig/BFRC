@@ -5,9 +5,10 @@ import java.io.IOException;
 import java.io.Writer;
 import java.util.Deque;
 
-import bfrc.ast.AbstractTreeWalker;
+import bfrc.ast.AbstractTreeVisitor;
 import bfrc.ast.BlockNode;
 import bfrc.ast.Node;
+import bfrc.ast.RootNode;
 import bfrc.backend.FileBackend;
 
 /**
@@ -18,7 +19,7 @@ import bfrc.backend.FileBackend;
  * 
  * @see <a href="http://www.graphviz.org/content/dot-language">The DOT Language</a>
  */
-public class DotGrapher extends AbstractTreeWalker<IOException> implements FileBackend {
+public class DotGrapher extends AbstractTreeVisitor<IOException> implements FileBackend {
 	private Writer out;
 
 	@Override
@@ -32,20 +33,19 @@ public class DotGrapher extends AbstractTreeWalker<IOException> implements FileB
 	}
 
 	@Override
-	protected void before() throws IOException {
+	public void before(RootNode root) throws IOException {
 		out.write("digraph BFRC {\n");
 	}
 
 	@Override
-	protected boolean visit(Node node, Deque<BlockNode> stack) throws IOException {
+	public void visit(Node node, Deque<BlockNode> stack) throws IOException {
 		Node parent = stack.peek();
 		if (parent != null)
 			out.write("\t\"" + parent + "\" -> \"" + node + "\";\n");
-		return true;
 	}
 
 	@Override
-	protected void after() throws IOException {
+	public void after(RootNode root) throws IOException {
 		out.write("}");
 		out.close();
 	}

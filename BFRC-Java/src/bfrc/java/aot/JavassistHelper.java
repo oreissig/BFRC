@@ -7,11 +7,12 @@ import javassist.ClassPool;
 import javassist.CtClass;
 import javassist.CtMethod;
 import javassist.CtNewMethod;
-import bfrc.ast.AbstractTreeWalker;
+import bfrc.ast.AbstractTreeVisitor;
 import bfrc.ast.BlockNode;
 import bfrc.ast.ChangeNode;
 import bfrc.ast.Node;
 import bfrc.ast.NodeType;
+import bfrc.ast.RootNode;
 import bfrc.backend.Backend;
 
 /**
@@ -21,12 +22,12 @@ import bfrc.backend.Backend;
  * 
  * @author oreissig
  */
-class JavassistHelper extends AbstractTreeWalker<CannotCompileException> {
+class JavassistHelper extends AbstractTreeVisitor<CannotCompileException> {
 
 	private StringBuilder body;
 	private CtClass c;
 
-	public synchronized CtClass create(String className, Node root)
+	public synchronized CtClass create(String className, RootNode root)
 			throws CannotCompileException {
 		ClassPool cp = ClassPool.getDefault();
 		c = cp.makeClass(className);
@@ -39,12 +40,12 @@ class JavassistHelper extends AbstractTreeWalker<CannotCompileException> {
 	}
 
 	@Override
-	protected void before() {
+	public void before(RootNode root) {
 		body = new StringBuilder("public static int main()");
 	}
 
 	@Override
-	protected void after() throws CannotCompileException {
+	public void after(RootNode root) throws CannotCompileException {
 		try {
 			CtMethod m = CtNewMethod.make(body.toString(), c);
 			c.addMethod(m);
@@ -54,7 +55,7 @@ class JavassistHelper extends AbstractTreeWalker<CannotCompileException> {
 	}
 
 	@Override
-	protected boolean visit(Node node, Deque<BlockNode> stack) {
+	public void visit(Node node, Deque<BlockNode> stack) {
 		switch (node.type) {
 			case ROOT:
 				body.append("{")
@@ -84,11 +85,10 @@ class JavassistHelper extends AbstractTreeWalker<CannotCompileException> {
 			default:
 				throw new RuntimeException("unexpected node: " + node.type);
 		}
-		return true;
 	}
 
 	@Override
-	protected void leave(BlockNode node, Deque<BlockNode> stack) {
+	public void leave(BlockNode node, Deque<BlockNode> stack) {
 		if (node.type == NodeType.ROOT)
 			body.append("return mem[ptr];");
 		body.append("}");

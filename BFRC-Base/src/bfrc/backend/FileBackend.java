@@ -2,6 +2,8 @@ package bfrc.backend;
 
 import java.io.IOException;
 
+import bfrc.ast.RootNode;
+
 /**
  * Common interface for all BFRC backends, that produce an output file.
  * 
@@ -23,4 +25,7 @@ public interface FileBackend extends Backend {
 	 * @return file extension
 	 */
 	public String getDefaultExtension();
+
+	@Override
+	public void work(RootNode root) throws IOException;
 }

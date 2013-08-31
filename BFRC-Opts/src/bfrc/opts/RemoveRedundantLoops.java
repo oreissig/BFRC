@@ -2,7 +2,7 @@ package bfrc.opts;
 
 import java.util.Deque;
 
-import bfrc.ast.AbstractTreeWalker;
+import bfrc.ast.AbstractTreeVisitor;
 import bfrc.ast.BlockNode;
 import bfrc.ast.Node;
 import bfrc.ast.NodeType;
@@ -21,11 +21,11 @@ import bfrc.optimizer.OptimizerException;
  * 
  * @author oreissig
  */
-public class RemoveRedundantLoops extends AbstractTreeWalker<OptimizerException>
+public class RemoveRedundantLoops extends AbstractTreeVisitor<OptimizerException>
 		implements Optimizer {
 
 	@Override
-	protected void leave(BlockNode block, Deque<BlockNode> stack) {
+	public void leave(BlockNode block, Deque<BlockNode> stack) {
 		for (int i = 0; i < block.sub.size(); i++) {
 			Node n = block.sub.get(i);
 			if (n.type == NodeType.LOOP) {

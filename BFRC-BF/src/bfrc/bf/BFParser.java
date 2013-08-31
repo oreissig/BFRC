@@ -32,10 +32,10 @@ public class BFParser implements Parser {
 	private Lexer in;
 
 	@Override
-	public synchronized BlockNode parse(Lexer input) throws ParserException {
+	public synchronized RootNode parse(Lexer input) throws ParserException {
 		in = input;
 
-		BlockNode ast = new RootNode();
+		RootNode ast = new RootNode();
 		program(ast);
 
 		in = null;

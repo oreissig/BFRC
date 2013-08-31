@@ -3,7 +3,7 @@ package bfrc.opts;
 import java.util.Deque;
 import java.util.List;
 
-import bfrc.ast.AbstractTreeWalker;
+import bfrc.ast.AbstractTreeVisitor;
 import bfrc.ast.BlockNode;
 import bfrc.ast.ChangeNode;
 import bfrc.ast.Node;
@@ -20,11 +20,11 @@ import bfrc.optimizer.OptimizerException;
  * 
  * @author oreissig
  */
-public class FuseAbsoluteOps extends AbstractTreeWalker<OptimizerException>
+public class FuseAbsoluteOps extends AbstractTreeVisitor<OptimizerException>
 		implements Optimizer {
 
 	@Override
-	protected boolean enter(BlockNode block, Deque<BlockNode> stack) {
+	public void enter(BlockNode block, Deque<BlockNode> stack) {
 		ChangeNode previous = null;
 		int prevIndex = -1;
 
@@ -59,7 +59,5 @@ public class FuseAbsoluteOps extends AbstractTreeWalker<OptimizerException>
 				prevIndex = -1;
 			}
 		}
-
-		return true;
 	}
 }

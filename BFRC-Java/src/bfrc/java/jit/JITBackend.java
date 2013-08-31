@@ -15,6 +15,7 @@ import javassist.NotFoundException;
 import bfrc.ast.BlockNode;
 import bfrc.ast.ChangeNode;
 import bfrc.ast.Node;
+import bfrc.ast.RootNode;
 import bfrc.backend.Backend;
 
 /**
@@ -49,7 +50,7 @@ public class JITBackend extends JITContext implements Backend {
 	}
 
 	@Override
-	public void work(Node root) {
+	public void work(RootNode root) {
 		if (root instanceof BlockNode) {
 			blocks.add((BlockNode) root);
 			JITBlock main = compile(0);

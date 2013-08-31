@@ -5,6 +5,7 @@ import java.io.IOException;
 import bfrc.ast.BlockNode;
 import bfrc.ast.ChangeNode;
 import bfrc.ast.Node;
+import bfrc.ast.RootNode;
 import bfrc.backend.Backend;
 
 /**
@@ -19,18 +20,18 @@ public class Interpreter implements Backend {
 	private int p = 0;
 
 	@Override
-	public void work(Node n) throws IOException {
+	public void work(RootNode root) throws IOException {
+		for (Node n : root.sub)
+			visit(n);
+	}
+
+	private void visit(Node n) throws IOException {
 		switch (n.type) {
 			case LOOP:
-				BlockNode bn = (BlockNode) n;
+				BlockNode block = (BlockNode) n;
 				while (mem[p] != 0)
-					for (Node sub : bn.sub)
-						work(sub);
-				break;
-			case ROOT:
-				bn = (BlockNode) n;
-				for (Node sub : bn.sub)
-					work(sub);
+					for (Node child : block.sub)
+						visit(child);
 				break;
 			case VALUE:
 				ChangeNode cn = (ChangeNode) n;

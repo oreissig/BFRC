@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import bfrc.ast.BlockNode;
+import bfrc.ast.RootNode;
 import bfrc.backend.Backend;
 import bfrc.backend.FileBackend;
 import bfrc.lexer.Lexer;
@@ -16,7 +16,7 @@ import bfrc.optimizer.Optimizer;
 import bfrc.parser.Parser;
 
 public class Brainfuck {
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws Exception {
 		Properties props = new Properties();
 		String inFile = null;
 		String outFile = null;
@@ -66,7 +66,7 @@ public class Brainfuck {
 		}
 
 		// do the compilation
-		BlockNode ast = p.parse(l);
+		RootNode ast = p.parse(l);
 		for (Optimizer o : opts)
 			o.work(ast);
 		b.work(ast);
