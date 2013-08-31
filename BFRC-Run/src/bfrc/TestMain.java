@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.io.Writer;
 
 public class TestMain {
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws Exception {
 		String src = ">+++++++++[<++++++++>-]<.>+++++++[<++++>-]<+.+++++++..+++.[-]>++++++++[<++++>-]<.>+++++++++++[<+++++>-]<.>++++++++[<+++>-]<.+++.------.--------.[-]>++++++++[<++++>-]<+.[-]++++++++++.";
 
 		File srcFile = createTempFile(src);
@@ -19,7 +19,12 @@ public class TestMain {
 			params[0] = "-" + config;
 			params[2] = "test." + config;
 			// run
-			Brainfuck.main(params);
+			try {
+				System.out.println("run with backend " + config);
+				Brainfuck.main(params);
+			} catch (Exception e) {
+				new RuntimeException("backend " + config + " failed", e).printStackTrace();
+			}
 		}
 	}
 
