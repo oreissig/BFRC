@@ -3,6 +3,6 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
 	<classpathentry kind="src" path="/BFRC-Base"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/javassist-3.17.1-GA"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Javassist"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
