@@ -73,18 +73,18 @@ public class JITBackend extends JITContext implements Backend {
 	public JITBlock compile(int blockID) {
 		if (trace)
 			new Trace("compile", blockID).printStackTrace();
-		
+
 		int blocksBefore = blocks.size();
 		BlockNode block = blocks.get(blockID);
 		String method = buildMethod(block);
 		int blocksAfter = blocks.size();
 
 		Collection<Integer> newBlocks = new ArrayList<>(blocksAfter - blocksBefore);
-		for (int i=blocksBefore; i<blocksAfter; i++)
+		for (int i = blocksBefore; i < blocksAfter; i++)
 			newBlocks.add(i);
 
-		Class<? extends JITBlock> clazz = buildClass(className + 'L' + block.line + "P" + block.offset,
-				newBlocks, method);
+		Class<? extends JITBlock> clazz = buildClass(className + 'L' +
+				block.line + "P" + block.offset, newBlocks, method);
 		try {
 			return clazz.newInstance();
 		} catch (InstantiationException | IllegalAccessException e) {
@@ -101,8 +101,11 @@ public class JITBackend extends JITContext implements Backend {
 				int id = add(nested);
 				body.append("if($1.mem[$1.ptr]!=0)")
 				    .append("do{")
+				    // how often did we call it?
 				    .append("switch(c" + id + "++){")
+				    // 0 => get interpreted version for first execution
 				    .append("case 0:b" + id + "=$1.interpret(" + id + ");break;")
+				    // threshold reached => replace by compiled version
 				    .append("case " + COMPILE_THRESHOLD + ":b" + id + "=$1.compile(" + id + ");")
 				    .append("}")
 				    .append("b" + id + ".call($1);")
@@ -138,7 +141,7 @@ public class JITBackend extends JITContext implements Backend {
 		return blockID;
 	}
 
-	@SuppressWarnings("unchecked")	// it really creates JITCallable classes
+	@SuppressWarnings("unchecked")	// it really creates JITBlock classes
 	private Class<? extends JITBlock> buildClass(String className,
 			Collection<Integer> blockIDs, String code) {
 		try {

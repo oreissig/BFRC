@@ -19,6 +19,7 @@ final class InterpretedJITBlock implements JITBlock {
 		for (Node n : block.sub) {
 			switch (n.type) {
 				case LOOP:
+					// only compiled blocks can compile sub-blocks
 					BlockNode bn = (BlockNode) n;
 					JITBlock block = new InterpretedJITBlock(bn);
 					block.call(c);
