@@ -25,6 +25,12 @@ public class Interpreter implements Backend {
 			visit(n);
 	}
 
+	/**
+	 * This method implements a custom traversion mechanism to handle repeated
+	 * loop execution.
+	 * 
+	 * @param n node to visit
+	 */
 	private void visit(Node n) throws IOException {
 		switch (n.type) {
 			case LOOP:
