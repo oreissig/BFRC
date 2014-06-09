@@ -29,9 +29,9 @@ public class BFLexer implements Lexer {
 	@Override
 	public Token next() {
 		try {
-			int last = in.read();
-			offset++;
-			while (last >= 0) {
+			while (true) {
+				int last = in.read();
+				offset++;
 				switch (last) {
 					case '+':
 						return new Token(PLUS, lineNo, offset);
@@ -50,14 +50,14 @@ public class BFLexer implements Lexer {
 					case ',':
 						return new Token(IN, lineNo, offset);
 					case '\n':
-						offset = 1;
+						offset = 0;
 						lineNo++;
+						break;
+					case -1:
+						// end of file
+						return null;
 				}
-				// no hit, read next char
-				last = in.read();
 			}
-			// end of file
-			return null;
 		} catch (IOException e) {
 			throw new LexicalException(e);
 		}
