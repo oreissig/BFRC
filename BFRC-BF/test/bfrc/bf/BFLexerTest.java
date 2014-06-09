@@ -1,6 +1,9 @@
 package bfrc.bf;
 
 import static bfrc.lexer.Token.TokenType.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -9,7 +12,6 @@ import java.io.StringReader;
 import org.junit.Test;
 
 import bfrc.lexer.Token;
-import static org.junit.Assert.*;
 
 public class BFLexerTest {
 
@@ -59,7 +61,8 @@ public class BFLexerTest {
 		}
 	}
 
-	public static void assertPosition(int expectedLine, int expectedOffset, Token actual) {
+	public static void assertPosition(int expectedLine, int expectedOffset,
+			Token actual) {
 		assertNotNull(actual);
 		assertEquals(expectedLine, actual.line);
 		assertEquals(expectedOffset, actual.offset);
