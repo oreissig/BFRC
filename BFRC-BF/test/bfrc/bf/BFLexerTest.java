@@ -50,7 +50,7 @@ public class BFLexerTest {
 
 	@Test
 	public void trackPositions() throws IOException {
-		try (Reader in = new StringReader("+  ++\n\n+\t+")) {
+		try (Reader in = new StringReader("+  ++\n\n+\t+\n +")) {
 			l.setInput(in);
 
 			assertPosition(1, 1, l.next());
@@ -58,6 +58,7 @@ public class BFLexerTest {
 			assertPosition(1, 5, l.next());
 			assertPosition(3, 1, l.next());
 			assertPosition(3, 3, l.next());
+			assertPosition(4, 2, l.next());
 		}
 	}
 
