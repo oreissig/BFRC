@@ -51,14 +51,12 @@ public class JITBackend extends JITContext implements Backend {
 
 	@Override
 	public void work(RootNode root) {
-		if (root instanceof BlockNode) {
-			blocks.add((BlockNode) root);
-			JITBlock main = compile(0);
-			try {
-				main.call(this);
-			} catch (Throwable t) {
-				throw new RuntimeException("Exception executing generated code", t);
-			}
+		blocks.add(root);
+		JITBlock main = compile(0);
+		try {
+			main.call(this);
+		} catch (Throwable t) {
+			throw new RuntimeException("Exception executing generated code", t);
 		}
 	}
 
@@ -141,7 +139,6 @@ public class JITBackend extends JITContext implements Backend {
 		return blockID;
 	}
 
-	@SuppressWarnings("unchecked")	// it really creates JITBlock classes
 	private Class<? extends JITBlock> buildClass(String className,
 			Collection<Integer> blockIDs, String code) {
 		try {

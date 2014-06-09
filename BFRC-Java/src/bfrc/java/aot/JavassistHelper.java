@@ -94,7 +94,7 @@ class JavassistHelper extends AbstractTreeVisitor<CannotCompileException> {
 		body.append("}");
 	}
 
-	private String varChange(int change) {
+	private static String varChange(int change) {
 		if (change > 0) {
 			if (change == 1)
 				return "++";

@@ -44,43 +44,46 @@ public class Brainfuck {
 		// construct instances
 		String lexerClass = props.getProperty("bfrc.lexer");
 		Lexer l = instantiate(Lexer.class, lexerClass);
-		Reader in = new FileReader(inFile);
-		l.setInput(in);
+		try (Reader in = new FileReader(inFile)) {
+			l.setInput(in);
 
-		String parserClass = props.getProperty("bfrc.parser");
-		Parser p = instantiate(Parser.class, parserClass);
+			String parserClass = props.getProperty("bfrc.parser");
+			Parser p = instantiate(Parser.class, parserClass);
 
-		String[] optClasses = props.getProperty("bfrc.optimizers", " ").split("\\s");
-		List<Optimizer> opts = new ArrayList<>(optClasses.length);
-		for (String optClass : optClasses)
-			if (!optClass.trim().isEmpty())
-				opts.add(instantiate(Optimizer.class, optClass));
+			String[] optClasses = props.getProperty("bfrc.optimizers", " ")
+					.split("\\s");
+			List<Optimizer> opts = new ArrayList<>(optClasses.length);
+			for (String optClass : optClasses)
+				if (!optClass.trim().isEmpty())
+					opts.add(instantiate(Optimizer.class, optClass));
 
-		String backendClass = props.getProperty("bfrc.backend");
-		Backend b = instantiate(Backend.class, backendClass);
-		if (b instanceof FileBackend) {
-			FileBackend fb = (FileBackend) b;
-			if (outFile == null)
-				outFile = inFile + '.' + fb.getDefaultExtension();
-			fb.setOutput(outFile);
+			String backendClass = props.getProperty("bfrc.backend");
+			Backend b = instantiate(Backend.class, backendClass);
+			if (b instanceof FileBackend) {
+				FileBackend fb = (FileBackend) b;
+				if (outFile == null)
+					outFile = inFile + '.' + fb.getDefaultExtension();
+				fb.setOutput(outFile);
+			}
+
+			// do the compilation
+			RootNode ast = p.parse(l);
+			for (Optimizer o : opts)
+				o.work(ast);
+			b.work(ast);
 		}
-
-		// do the compilation
-		RootNode ast = p.parse(l);
-		for (Optimizer o : opts)
-			o.work(ast);
-		b.work(ast);
 	}
 
 	private static boolean loadProperties(Properties props, String fileName) throws IOException {
-		InputStream in = Brainfuck.class.getClassLoader()
-								.getResourceAsStream("bfrc/" + fileName + ".config");
-		if (in != null) {
-			props.load(in);
-			return true;
-		} else {
-			System.err.println("could not find configuration: " + fileName);
-			return false;
+		try (InputStream in = Brainfuck.class.getClassLoader()
+				.getResourceAsStream("bfrc/" + fileName + ".config")) {
+			if (in != null) {
+				props.load(in);
+				return true;
+			} else {
+				System.err.println("could not find configuration: " + fileName);
+				return false;
+			}
 		}
 	}
 
