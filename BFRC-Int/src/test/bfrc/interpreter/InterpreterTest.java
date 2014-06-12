@@ -1,7 +1,5 @@
 package bfrc.interpreter;
 
-import java.io.IOException;
-
 import org.junit.Test;
 
 import bfrc.ast.RootNode;
@@ -55,8 +53,7 @@ public class InterpreterTest {
 
 	@Test(expected = IndexOutOfBoundsException.class)
 	public void moveOverflow() {
-		RootNode n = TestAST.begin().set(1).loop().move(1).change(1).end()
-				.end();
+		RootNode n = TestAST.begin().set(1).loop().move(1).change(1).end().end();
 		new TestInterpreter().work(n);
 	}
 }
