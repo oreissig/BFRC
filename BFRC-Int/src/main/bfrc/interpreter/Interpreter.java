@@ -51,13 +51,21 @@ public class Interpreter implements Backend {
 				p += cn.change;
 				break;
 			case INPUT:
-				mem[p] = (byte) System.in.read();
+				mem[p] = read();
 				break;
 			case OUTPUT:
-				System.out.write(mem[p]);
+				write(mem[p]);
 				break;
 			default:
 				throw new RuntimeException("unexpected node type: " + n.type);
 		}
+	}
+
+	void write(byte value) {
+		System.out.write(value);
+	}
+
+	byte read() throws IOException {
+		return (byte) System.in.read();
 	}
 }
