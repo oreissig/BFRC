@@ -20,7 +20,7 @@ public class Interpreter implements Backend {
 	private int p = 0;
 
 	@Override
-	public void work(RootNode root) throws IOException {
+	public void work(RootNode root) {
 		for (Node n : root.sub)
 			visit(n);
 	}
@@ -31,33 +31,37 @@ public class Interpreter implements Backend {
 	 * 
 	 * @param n node to visit
 	 */
-	private void visit(Node n) throws IOException {
-		switch (n.type) {
-			case LOOP:
-				BlockNode block = (BlockNode) n;
-				while (mem[p] != 0)
-					for (Node child : block.sub)
-						visit(child);
-				break;
-			case VALUE:
-				ChangeNode cn = (ChangeNode) n;
-				if (cn.absolute)
-					mem[p] = (byte) cn.change;
-				else
-					mem[p] += cn.change;
-				break;
-			case POINTER:
-				cn = (ChangeNode) n;
-				p += cn.change;
-				break;
-			case INPUT:
-				mem[p] = read();
-				break;
-			case OUTPUT:
-				write(mem[p]);
-				break;
-			default:
-				throw new RuntimeException("unexpected node type: " + n.type);
+	private void visit(Node n) {
+		try {
+			switch (n.type) {
+				case LOOP:
+					BlockNode block = (BlockNode) n;
+					while (mem[p] != 0)
+						for (Node child : block.sub)
+							visit(child);
+					break;
+				case VALUE:
+					ChangeNode cn = (ChangeNode) n;
+					if (cn.absolute)
+						mem[p] = (byte) cn.change;
+					else
+						mem[p] += cn.change;
+					break;
+				case POINTER:
+					cn = (ChangeNode) n;
+					p += cn.change;
+					break;
+				case INPUT:
+					mem[p] = read();
+					break;
+				case OUTPUT:
+					write(mem[p]);
+					break;
+				default:
+					throw new RuntimeException("unexpected node type: " + n.type);
+			}
+		} catch (Exception e) {
+			throw new RuntimeException("Error interpreting " + n, e);
 		}
 	}
 
