@@ -17,7 +17,16 @@ import bfrc.backend.Backend;
 public class Interpreter implements Backend {
 
 	private final byte[] mem = new byte[MEM_SIZE];
+	private final InputOutput io;
 	private int p = 0;
+
+	public Interpreter() {
+		this(new ConsoleIO());
+	}
+
+	public Interpreter(InputOutput io) {
+		this.io = io;
+	}
 
 	@Override
 	public void work(RootNode root) {
@@ -65,11 +74,11 @@ public class Interpreter implements Backend {
 		}
 	}
 
-	void write(byte value) {
-		System.out.write(value);
+	void write(byte value) throws IOException {
+		io.write(value);
 	}
 
 	byte read() throws IOException {
-		return (byte) System.in.read();
+		return io.read();
 	}
 }

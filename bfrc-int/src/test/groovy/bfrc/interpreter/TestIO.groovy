@@ -1,10 +1,9 @@
 package bfrc.interpreter
 
 import groovy.transform.CompileStatic
-import bfrc.ast.RootNode
 
 @CompileStatic
-class TestInterpreter extends Interpreter {
+class TestIO implements InputOutput {
 	List<Byte> inputs = []
 	final List<Byte> outputs = []
 
@@ -14,11 +13,6 @@ class TestInterpreter extends Interpreter {
 
 	void setInputs(String inputs) {
 		setInputs(inputs.bytes)
-	}
-
-	@Override
-	void work(RootNode root) {
-		super.work(root)
 	}
 
 	@Override
