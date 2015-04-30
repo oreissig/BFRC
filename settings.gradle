@@ -1,0 +1,3 @@
+settingsDir.eachDirMatch(~/bfrc-.*/) {
+	include it.name
+}

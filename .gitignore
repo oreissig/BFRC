@@ -1,3 +1,5 @@
 /BFRC-Run/test.*
 .classpath
 .project
+/bfrc-*/build
+/.gradle
