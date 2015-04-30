@@ -1,5 +1,10 @@
-/BFRC-Run/test.*
-.classpath
-.project
+# gradle files
 /bfrc-*/build
 /.gradle
+
+# eclipse files
+.classpath
+.project
+/bfrc-*/bin
+.settings/gradle/*.prefs
+*/.settings/gradle/*.prefs
