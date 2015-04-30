@@ -6,5 +6,4 @@
 .classpath
 .project
 /bfrc-*/bin
-.settings/gradle/*.prefs
-*/.settings/gradle/*.prefs
+.settings
