@@ -28,4 +28,16 @@ public abstract class BlockNode extends Node {
 		stack.pop();
 		visitor.leave(this, stack);
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (!super.equals(obj))
+			return false;
+		if (!(obj instanceof BlockNode))
+			return false;
+		BlockNode other = (BlockNode) obj;
+		if (!sub.equals(other.sub))
+			return false;
+		return true;
+	}
 }

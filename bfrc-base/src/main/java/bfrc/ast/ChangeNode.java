@@ -30,4 +30,18 @@ public abstract class ChangeNode extends Node {
 		  .append(')');
 		return sb.toString();
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (!super.equals(obj))
+			return false;
+		if (!(obj instanceof ChangeNode))
+			return false;
+		ChangeNode other = (ChangeNode) obj;
+		if (absolute != other.absolute)
+			return false;
+		if (change != other.change)
+			return false;
+		return true;
+	}
 }

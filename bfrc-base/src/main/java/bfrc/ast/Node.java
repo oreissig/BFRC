@@ -57,4 +57,29 @@ public abstract class Node {
 			Deque<BlockNode> stack) throws E {
 		visitor.visit(this, stack);
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + line;
+		result = prime * result + offset;
+		result = prime * result + ((type == null) ? 0 : type.hashCode());
+		return result;
+	}
+
+	/* 
+	 * Ignore line and offset for equals check. 
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null)
+			return false;
+		if (!(obj instanceof Node))
+			return false;
+		Node other = (Node) obj;
+		if (type != other.type)
+			return false;
+		return true;
+	}
 }
