@@ -1,7 +1,5 @@
 package bfrc.interpreter;
 
-import java.io.IOException;
-
 import bfrc.ast.BlockNode;
 import bfrc.ast.ChangeNode;
 import bfrc.ast.Node;
@@ -16,9 +14,9 @@ import bfrc.backend.Backend;
  */
 public class Interpreter implements Backend {
 
-	private final byte[] mem = new byte[MEM_SIZE];
+	protected final byte[] mem = new byte[MEM_SIZE];
+	protected int p = 0;
 	private final InputOutput io;
-	private int p = 0;
 
 	public Interpreter() {
 		this(new ConsoleIO());
@@ -40,7 +38,7 @@ public class Interpreter implements Backend {
 	 * 
 	 * @param n node to visit
 	 */
-	private void visit(Node n) {
+	protected void visit(Node n) {
 		try {
 			switch (n.type) {
 				case LOOP:
@@ -61,10 +59,10 @@ public class Interpreter implements Backend {
 					p += cn.change;
 					break;
 				case INPUT:
-					mem[p] = read();
+					mem[p] = io.read();
 					break;
 				case OUTPUT:
-					write(mem[p]);
+					io.write(mem[p]);
 					break;
 				default:
 					throw new RuntimeException("unexpected node type: " + n.type);
@@ -72,13 +70,5 @@ public class Interpreter implements Backend {
 		} catch (Exception e) {
 			throw new RuntimeException("Error interpreting " + n, e);
 		}
-	}
-
-	void write(byte value) throws IOException {
-		io.write(value);
-	}
-
-	byte read() throws IOException {
-		return io.read();
 	}
 }
