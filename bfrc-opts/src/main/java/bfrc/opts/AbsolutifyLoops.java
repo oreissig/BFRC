@@ -6,6 +6,9 @@ import static bfrc.ast.NodeType.VALUE;
 import java.util.Deque;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import bfrc.ast.AbstractTreeVisitor;
 import bfrc.ast.BlockNode;
 import bfrc.ast.ChangeNode;
@@ -29,6 +32,8 @@ import bfrc.optimizer.OptimizerException;
  */
 public class AbsolutifyLoops extends AbstractTreeVisitor<OptimizerException>
 		implements Optimizer {
+
+	private final Logger log = LoggerFactory.getLogger(getClass());
 
 	@Override
 	public void leave(BlockNode block, Deque<BlockNode> stack)
@@ -56,8 +61,7 @@ public class AbsolutifyLoops extends AbstractTreeVisitor<OptimizerException>
 						" can never end");
 			// even relative loop increments might never end
 			if (!vn.absolute && vn.change % 2 == 0) {
-				System.err.println("loop at " + n.position() +
-						" may never end, did not optimize");
+				log.warn("loop at {} may never end, did not optimize", n.position());
 				continue;
 			}
 
