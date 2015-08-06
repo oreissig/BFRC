@@ -7,3 +7,5 @@
 .project
 /bfrc-*/bin
 .settings
+/bfrc-run/*.class
+/bfrc-run/test*

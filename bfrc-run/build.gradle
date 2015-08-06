@@ -2,4 +2,11 @@ apply plugin: 'java'
 
 dependencies {
 	compile project(':bfrc-base')
+	runtime project(':bfrc-bf')
+	runtime project(':bfrc-c')
+	runtime project(':bfrc-dot')
+	runtime project(':bfrc-int')
+	runtime project(':bfrc-java')
+	runtime project(':bfrc-ook')
+	runtime project(':bfrc-opts')
 }
