@@ -4,7 +4,6 @@ TODOs
 Some ideas for future work are collected here.
 
 #### Testing
-* Provide step-counting AST-Interpreter to measure effectiveness of optimizations.
 * Verify that optimizations don't alter the runtime behaviour (call test-interpreter).
 * Verify that all optimizations are idempotent, i.e. opt(P) == opt(opt(P)) (check AST for that).
 * Come up with some programs to test:
@@ -13,8 +12,6 @@ Some ideas for future work are collected here.
 * Take a look at [QuickCheck](https://github.com/mcandre/gruesome/blob/master/src/main/groovy/example.groovy).
 
 #### Optimization
-* AbsolutifyLoops/FuseAbsoluteOps
-    * After any loop, the current cell's status is guaranteed to be zero. Use = instead of += to save the read.
 * Implement cell bounds analysis
     * Check that all loops contain the same number of `<` as they do `>`.
     * If they do, we can statically count the farthest cell the program will reach and only allocate so much memory.

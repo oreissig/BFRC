@@ -3,6 +3,7 @@ package bfrc.interpreter
 import spock.lang.Specification
 import bfrc.ast.RootNode
 import bfrc.ast.TestAST
+import bfrc.interpreter.test.TestIO
 
 class InterpreterSpec extends Specification {
 

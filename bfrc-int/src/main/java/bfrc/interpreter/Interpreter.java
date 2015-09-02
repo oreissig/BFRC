@@ -16,7 +16,7 @@ public class Interpreter implements Backend {
 
 	protected final byte[] mem = new byte[MEM_SIZE];
 	protected int p = 0;
-	private final InputOutput io;
+	protected final InputOutput io;
 
 	public Interpreter() {
 		this(new ConsoleIO());
