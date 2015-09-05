@@ -39,6 +39,8 @@ public class BenchmarkImpl extends Interpreter implements Benchmark {
 
 	@Override
 	public long getSteps() {
+		if (steps < 0)
+			throw new IllegalStateException("You must first execute some program.");
 		return steps;
 	}
 }
