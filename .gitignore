@@ -9,3 +9,4 @@
 .settings
 /bfrc-run/*.class
 /bfrc-run/test*
+/build/
