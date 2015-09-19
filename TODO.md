@@ -6,9 +6,6 @@ Some ideas for future work are collected here.
 #### Testing
 * Verify that optimizations don't alter the runtime behaviour (call test-interpreter).
 * Verify that all optimizations are idempotent, i.e. opt(P) == opt(opt(P)) (check AST for that).
-* Come up with some programs to test:
-    * a set of representative real world programs
-    * edge cases designed to verify potential optimization pitfalls
 * Take a look at [QuickCheck](https://github.com/mcandre/gruesome/blob/master/src/main/groovy/example.groovy).
 
 #### Optimization
