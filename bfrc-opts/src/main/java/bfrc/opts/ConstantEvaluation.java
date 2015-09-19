@@ -18,7 +18,8 @@ import bfrc.optimizer.OptimizerException;
 
 public class ConstantEvaluation implements Optimizer {
 
-	final static long THRESHOLD = 1000;
+	// 2M is large enough for 99 bottles of beer :-)
+	final static long THRESHOLD = 2000000;
 	final Logger log = LoggerFactory.getLogger(getClass());
 
 	private final ConstantInterpreter interpreter;
