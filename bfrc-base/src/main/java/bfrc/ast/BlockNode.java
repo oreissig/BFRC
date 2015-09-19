@@ -40,4 +40,11 @@ public abstract class BlockNode extends Node {
 			return false;
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sub.forEach(n -> sb.append(n.toString()));
+		return sb.toString();
+	}
 }
