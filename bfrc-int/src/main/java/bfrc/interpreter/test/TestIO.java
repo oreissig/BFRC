@@ -11,7 +11,7 @@ import bfrc.interpreter.InputOutput;
 
 import com.google.common.primitives.Bytes;
 
-class TestIO implements InputOutput {
+public class TestIO implements InputOutput {
 	private final Logger log = LoggerFactory.getLogger(getClass());
 	private List<Byte> inputs = new ArrayList<>();
 	private final List<Byte> outputs = new ArrayList<>();
