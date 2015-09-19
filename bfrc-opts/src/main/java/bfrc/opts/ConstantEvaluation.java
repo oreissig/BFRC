@@ -92,7 +92,7 @@ public class ConstantEvaluation implements Optimizer {
 		}
 
 		@Override
-		public void visit(Node n) {
+		public void visit(Node n) throws InterruptedException {
 			if (execCount++ > THRESHOLD) {
 				throw new AbortEvaluation("execution threshold has been reached");
 			}

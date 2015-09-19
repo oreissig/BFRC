@@ -1,13 +1,18 @@
 package bfrc.interpreter.test;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import bfrc.interpreter.InputOutput;
 
 import com.google.common.primitives.Bytes;
 
-public class TestIO implements InputOutput {
+class TestIO implements InputOutput {
+	private final Logger log = LoggerFactory.getLogger(getClass());
 	private List<Byte> inputs = new ArrayList<>();
 	private final List<Byte> outputs = new ArrayList<>();
 	
@@ -30,7 +35,7 @@ public class TestIO implements InputOutput {
 	}
 
 	public List<Byte> getOutputs() {
-		return outputs;
+		return Collections.unmodifiableList(outputs);
 	}
 
 	public String getOutputString() {
@@ -39,13 +44,22 @@ public class TestIO implements InputOutput {
 
 	@Override
 	public byte read() {
-		System.out.println("read " + inputs.get(0));
-		return inputs.remove(0);
+		if (inputs.isEmpty()) {
+			log.debug("nothing left to read, return 0");
+			return 0;
+		} else {
+			log.debug("read {}", inputs.get(0));
+			return inputs.remove(0);
+		}
 	}
 
 	@Override
 	public void write(byte value) {
-		System.out.println("write " + value);
+		log.debug("write {}", value);
 		outputs.add(value);
+	}
+	
+	protected void reset() {
+		outputs.clear();
 	}
 }

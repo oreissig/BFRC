@@ -16,13 +16,14 @@ public class BenchmarkImpl extends Interpreter implements Benchmark {
 	}
 
 	@Override
-	public void work(RootNode root) {
+	public void work(RootNode root) throws InterruptedException {
 		steps = 0;
+		io.reset();
 		super.work(root);
 	}
 
 	@Override
-	protected void visit(Node node) {
+	protected void visit(Node node) throws InterruptedException {
 		steps++;
 		super.visit(node);
 	}

@@ -5,16 +5,16 @@ import java.io.InputStream;
 public class Example {
 
 	public final String name;
-	public final String text;
+	public final String code;
 	public final String input;
 	public final String output;
 
 	public Example(String name) {
 		this.name = name;
-		String prefix = "bfrc.examples." + name;
-		text = read(prefix + ".bf");
-		input = read(prefix + ".in");
-		output = read(prefix + ".out");
+		code = read(name + ".bf");
+		assert code.length() > 0 : name + " could not be found";
+		input = read(name + ".in");
+		output = read(name + ".out");
 	}
 
 	@SuppressWarnings("resource")

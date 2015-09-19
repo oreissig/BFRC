@@ -27,7 +27,7 @@ public class Interpreter implements Backend {
 	}
 
 	@Override
-	public void work(RootNode root) {
+	public void work(RootNode root) throws InterruptedException {
 		for (Node n : root.sub)
 			visit(n);
 	}
@@ -37,8 +37,11 @@ public class Interpreter implements Backend {
 	 * loop execution.
 	 * 
 	 * @param n node to visit
+	 * @throws InterruptedException 
 	 */
-	protected void visit(Node n) {
+	protected void visit(Node n) throws InterruptedException {
+		if (Thread.interrupted())
+			throw new InterruptedException();
 		try {
 			switch (n.type) {
 				case LOOP:

@@ -23,7 +23,11 @@ public class BFBackend extends AbstractTreeVisitor<IOException> implements FileB
 
 	@Override
 	public void setOutput(String output) throws IOException {
-		this.out = new FileWriter(output);
+		setOutput(new FileWriter(output));
+	}
+
+	public void setOutput(Writer output) {
+		this.out = output;
 	}
 
 	@Override
