@@ -4,6 +4,7 @@ apply plugin: 'groovy'
 dependencies {
 	compile project(':bfrc-base')
 	compile project(':bfrc-int')
+	compile project(':bfrc-examples')
 	compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.6'
 	testCompile project(':bfrc-bf')
 	testCompile group: 'org.spockframework', name: 'spock-core', version: '1.0-groovy-2.3'
