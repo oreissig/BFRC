@@ -1,32 +1,30 @@
 package bfrc.examples;
 
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.Consumer;
+import java.util.HashSet;
+import java.util.Set;
 
 class Examples {
 
-	public static final Map<String, Example> EXAMPLES;
+	public static final Set<Example> EXAMPLES;
 
 	// forbid instantiation
 	private Examples() {
 	}
 
 	static {
-		Map<String, Example> map = new HashMap<>();
-		Consumer<String> add = name -> map.put(name, new Example(name));
+		Set<Example> set = new HashSet<>();
 
 		// TODO make excluded tests executable
-		add.accept("bottles");
-		//add.accept("factor");
-		//add.accept("fibs");
-		add.accept("fizzbuzz");
-		add.accept("hello_world");
-		//add.accept("life");
-		//add.accept("mandelbrot");
-		add.accept("squares");
+		set.add(new Example("bottles"));
+		//set.add(new Example("factor"));
+		//set.add(new Example("fibs"));
+		set.add(new Example("fizzbuzz"));
+		set.add(new Example("hello_world"));
+		//set.add(new Example("life"));
+		//set.add(new Example("mandelbrot"));
+		set.add(new Example("squares"));
 
-		EXAMPLES = Collections.unmodifiableMap(map);
+		EXAMPLES = Collections.unmodifiableSet(set);
 	}
 }
