@@ -1,5 +1,5 @@
 apply plugin: 'java'
 
 dependencies {
-	compile project(':bfrc-base')
+    compile project(':bfrc-base')
 }

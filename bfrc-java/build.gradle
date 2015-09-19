@@ -1,6 +1,6 @@
 apply plugin: 'java'
 
 dependencies {
-	compile project(':bfrc-base')
-	compile group: 'org.javassist', name: 'javassist', version: '3.19.0-GA'
+    compile project(':bfrc-base')
+    compile libraries.javassist
 }

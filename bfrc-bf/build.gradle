@@ -1,6 +1,6 @@
 apply plugin: 'java'
 
 dependencies {
-	compile project(':bfrc-base')
-	testCompile group: 'junit', name: 'junit', version: '4.12'
+    compile project(':bfrc-base')
+    testCompile libraries.junit
 }

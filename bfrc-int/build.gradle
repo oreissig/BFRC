@@ -2,8 +2,9 @@ apply plugin: 'java'
 apply plugin: 'groovy'
 
 dependencies {
-	compile project(':bfrc-base')
-	compile group: 'com.google.guava', name: 'guava', version: '18.0'
-	compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.6'
-	testCompile group: 'org.spockframework', name: 'spock-core', version: '1.0-groovy-2.3'
+    compile project(':bfrc-base')
+    compile libraries.guava
+    compile libraries.slf4j
+    testCompile libraries.spock
+    testRuntime libraries.slf4j_simple
 }
