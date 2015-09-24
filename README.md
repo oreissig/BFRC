@@ -1,6 +1,8 @@
 Brainfuck Research Compliler
 ============================
 
+[![Build Status](https://travis-ci.org/oreissig/BFRC.svg)](https://travis-ci.org/oreissig/BFRC)
+
 The project is designed as a tool for learning about compiler construction in an extremely simple way.
 Although being kind of over-engineered for the purpose of compiling Brainfuck, this compiler features most of the architectural elements of a mature language compiler.
 Nevertheless, its simplicity allows beginners to implement extensions in the course of an afternoon instead of weeks of work.
