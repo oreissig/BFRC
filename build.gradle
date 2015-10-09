@@ -2,6 +2,11 @@ subprojects {
     repositories {
         mavenCentral()
     }
+    
+    // configure code coverage
+    apply plugin: 'jacoco'
+    jacoco.toolVersion = '0.7.5.+'
+    tasks.withType(Test) { it.finalizedBy 'jacocoTestReport' }
 }
 
 ext {
