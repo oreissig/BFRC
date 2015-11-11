@@ -16,6 +16,6 @@ ext {
 libraries.guava = 'com.google.guava:guava:18.0'
 libraries.javassist = 'org.javassist:javassist:3.20.0-GA'
 libraries.junit = 'junit:junit:4.12'
-libraries.slf4j = 'org.slf4j:slf4j-api:1.7.12'
-libraries.slf4j_simple = 'org.slf4j:slf4j-simple:1.7.12'
+libraries.slf4j = 'org.slf4j:slf4j-api:1.7.13'
+libraries.slf4j_simple = 'org.slf4j:slf4j-simple:1.7.13'
 libraries.spock = 'org.spockframework:spock-core:1.0-groovy-2.4'
