@@ -13,7 +13,7 @@ ext {
     libraries = [:]
 }
 
-libraries.guava = 'com.google.guava:guava:18.0'
+libraries.guava = 'com.google.guava:guava:19.0'
 libraries.javassist = 'org.javassist:javassist:3.20.0-GA'
 libraries.junit = 'junit:junit:4.12'
 libraries.slf4j = 'org.slf4j:slf4j-api:1.7.13'
