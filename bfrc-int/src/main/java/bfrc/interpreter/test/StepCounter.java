@@ -1,16 +1,20 @@
 package bfrc.interpreter.test;
 
 import bfrc.ast.Node;
+import bfrc.ast.NodeType;
 import bfrc.interpreter.Interpreter.InterpreterListener;
 
 public class StepCounter implements InterpreterListener {
 
-    // start at -1, therefore the root node is not counted
-    private long steps = -1;
+    private long steps;
 
     @Override
     public void visit(Node n) {
-        steps++;
+        // don't count root node
+        if (n.type == NodeType.ROOT)
+            steps = 0;
+        else
+            steps++;
     }
 
     /**
@@ -24,9 +28,5 @@ public class StepCounter implements InterpreterListener {
         if (steps < 0)
             throw new IllegalStateException("You must first execute some program.");
         return steps;
-    }
-
-    public void reset() {
-        steps = -1;
     }
 }

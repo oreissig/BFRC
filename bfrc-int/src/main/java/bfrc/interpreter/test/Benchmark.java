@@ -9,4 +9,8 @@ public interface Benchmark extends Backend {
 	String getOutput();
 
 	long getSteps();
+	
+	public static Benchmark create() {
+		return new BenchmarkImpl();
+	}
 }

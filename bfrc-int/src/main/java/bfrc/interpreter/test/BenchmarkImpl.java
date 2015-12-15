@@ -3,7 +3,7 @@ package bfrc.interpreter.test;
 import bfrc.ast.RootNode;
 import bfrc.interpreter.Interpreter;
 
-public class BenchmarkImpl implements Benchmark {
+class BenchmarkImpl implements Benchmark {
 
 	private final Interpreter interpreter;
 	private final TestIO io;
@@ -18,7 +18,6 @@ public class BenchmarkImpl implements Benchmark {
 
 	@Override
 	public void work(RootNode root) throws InterruptedException {
-		count.reset();
 		io.reset();
 		interpreter.work(root);
 	}
