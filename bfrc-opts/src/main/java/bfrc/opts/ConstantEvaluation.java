@@ -85,6 +85,7 @@ public class ConstantEvaluation implements Optimizer {
 		root.sub.addAll(newProgram);
 	}
 
+	// not possible as listener, we need member access
 	protected class ConstantInterpreter extends Interpreter {
 		private long execCount = 0;
 
@@ -93,7 +94,7 @@ public class ConstantEvaluation implements Optimizer {
 		}
 
 		@Override
-		public void visit(Node n) throws InterruptedException {
+		public void visit(Node n) {
 			if (execCount++ > THRESHOLD) {
 				throw new AbortEvaluation("execution threshold has been reached");
 			}
