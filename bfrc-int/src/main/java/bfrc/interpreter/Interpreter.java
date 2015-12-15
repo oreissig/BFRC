@@ -1,7 +1,9 @@
 package bfrc.interpreter;
 
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Deque;
+import java.util.List;
 
 import bfrc.ast.BlockNode;
 import bfrc.ast.ChangeNode;
@@ -24,6 +26,7 @@ public class Interpreter implements Backend {
 	 * The execution stack of the program contains loop nodes.
 	 */
 	protected final Deque<Node> stack = new ArrayDeque<>();
+	private final List<InterpreterListener> listeners = new ArrayList<>();
 
 	public Interpreter() {
 		this(new ConsoleIO());
@@ -32,9 +35,14 @@ public class Interpreter implements Backend {
 	public Interpreter(InputOutput io) {
 		this.io = io;
 	}
+	
+	public void addListener(InterpreterListener newListener) {
+		listeners.add(newListener);
+	}
 
 	@Override
-	public void work(RootNode root) throws InterruptedException {
+	public void work(RootNode root) {
+		listeners.forEach(l -> l.visit(root));
 		for (Node n : root.sub)
 			visit(n);
 	}
@@ -46,7 +54,8 @@ public class Interpreter implements Backend {
 	 * @param n node to visit
 	 * @throws InterruptedException 
 	 */
-	protected void visit(Node n) throws InterruptedException {
+	protected void visit(Node n) {
+		listeners.forEach(l -> l.visit(n));
 		try {
 			switch (n.type) {
 				case LOOP:
@@ -92,5 +101,11 @@ public class Interpreter implements Backend {
 		return stack.stream().map(n -> new StackTraceElement("Brainfuck", "main",
 										Integer.toString(n.line), n.offset))
 							 .toArray(StackTraceElement[]::new);
+	}
+	
+	@FunctionalInterface
+	public static interface InterpreterListener
+	{
+		public void visit(Node n);
 	}
 }

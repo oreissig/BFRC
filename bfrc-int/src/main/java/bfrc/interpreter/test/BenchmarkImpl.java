@@ -1,31 +1,26 @@
 package bfrc.interpreter.test;
 
-import bfrc.ast.Node;
 import bfrc.ast.RootNode;
 import bfrc.interpreter.Interpreter;
 
-public class BenchmarkImpl extends Interpreter implements Benchmark {
+public class BenchmarkImpl implements Benchmark {
 
+	private final Interpreter interpreter;
 	private final TestIO io;
-	private long steps = -1;
+	private final StepCounter count;
 
 	public BenchmarkImpl() {
-		super(new TestIO());
-		// we know its TestIO
-		this.io = (TestIO) super.io;
+		io = new TestIO();
+		interpreter = new Interpreter(io);
+		count = new StepCounter();
+		interpreter.addListener(count);
 	}
 
 	@Override
 	public void work(RootNode root) throws InterruptedException {
-		steps = 0;
+		count.reset();
 		io.reset();
-		super.work(root);
-	}
-
-	@Override
-	protected void visit(Node node) throws InterruptedException {
-		steps++;
-		super.visit(node);
+		interpreter.work(root);
 	}
 
 	@Override
@@ -40,8 +35,6 @@ public class BenchmarkImpl extends Interpreter implements Benchmark {
 
 	@Override
 	public long getSteps() {
-		if (steps < 0)
-			throw new IllegalStateException("You must first execute some program.");
-		return steps;
+		return count.getSteps();
 	}
 }
