@@ -1,5 +1,8 @@
 package bfrc.interpreter;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
+
 import bfrc.ast.BlockNode;
 import bfrc.ast.ChangeNode;
 import bfrc.ast.Node;
@@ -17,6 +20,10 @@ public class Interpreter implements Backend {
 	protected final byte[] mem = new byte[MEM_SIZE];
 	protected int p = 0;
 	protected final InputOutput io;
+	/**
+	 * The execution stack of the program contains loop nodes.
+	 */
+	protected final Deque<Node> stack = new ArrayDeque<>();
 
 	public Interpreter() {
 		this(new ConsoleIO());
@@ -40,15 +47,18 @@ public class Interpreter implements Backend {
 	 * @throws InterruptedException 
 	 */
 	protected void visit(Node n) throws InterruptedException {
-		if (Thread.interrupted())
-			throw new InterruptedException();
 		try {
 			switch (n.type) {
 				case LOOP:
+					stack.push(n);
 					BlockNode block = (BlockNode) n;
-					while (mem[p] != 0)
+					while (mem[p] != 0) {
+						if (Thread.interrupted())
+							throw new InterruptedException();
 						for (Node child : block.sub)
 							visit(child);
+					}
+					stack.pop();
 					break;
 				case VALUE:
 					ChangeNode cn = (ChangeNode) n;
@@ -71,7 +81,16 @@ public class Interpreter implements Backend {
 					throw new RuntimeException("unexpected node type: " + n.type);
 			}
 		} catch (Exception e) {
-			throw new RuntimeException("Error interpreting " + n, e);
+			RuntimeException ex = new RuntimeException("Error interpreting " + n, e);
+			// set custom stack trace to point to the actual source program
+			ex.setStackTrace(getStack());
+			throw ex;
 		}
+	}
+	
+	private StackTraceElement[] getStack() {
+		return stack.stream().map(n -> new StackTraceElement("Brainfuck", "main",
+										Integer.toString(n.line), n.offset))
+							 .toArray(StackTraceElement[]::new);
 	}
 }
