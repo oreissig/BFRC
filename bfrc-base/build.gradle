@@ -1,1 +1,3 @@
-apply plugin: 'java'
+dependencies {
+    // no dependencies needed
+}

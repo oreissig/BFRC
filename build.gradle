@@ -1,7 +1,10 @@
+// common configuration
 subprojects {
     repositories {
         mavenCentral()
     }
+    
+    apply plugin: 'java'
     
     // configure code coverage
     apply plugin: 'jacoco'
