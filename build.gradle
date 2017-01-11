@@ -8,7 +8,7 @@ subprojects {
     
     // configure code coverage
     apply plugin: 'jacoco'
-    jacoco.toolVersion = '0.7.6.+'
+    jacoco.toolVersion = '0.7.8'
     tasks.withType(Test) { it.finalizedBy 'jacocoTestReport' }
 }
 
@@ -16,9 +16,9 @@ ext {
     libraries = [:]
 }
 
-libraries.guava = 'com.google.guava:guava:19.0'
-libraries.javassist = 'org.javassist:javassist:3.20.0-GA'
+libraries.guava = 'com.google.guava:guava:20.0'
+libraries.javassist = 'org.javassist:javassist:3.21.0-GA'
 libraries.junit = 'junit:junit:4.12'
-libraries.slf4j = 'org.slf4j:slf4j-api:1.7.18'
-libraries.slf4j_simple = 'org.slf4j:slf4j-simple:1.7.18'
-libraries.spock = 'org.spockframework:spock-core:1.0-groovy-2.4'
+libraries.slf4j = 'org.slf4j:slf4j-api:1.7.22'
+libraries.slf4j_simple = 'org.slf4j:slf4j-simple:1.7.22'
+libraries.spock = 'org.spockframework:spock-core:1.1-groovy-2.4-rc-3'
